@@ -25,7 +25,7 @@ def chunk_markdown(text:str,path:str):
         path=path,
         chunk_type="markdown"
     )
-    chunks.append(chunk)      
+        chunks.append(chunk)      
     return chunks        
        
 
