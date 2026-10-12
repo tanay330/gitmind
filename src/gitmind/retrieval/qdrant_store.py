@@ -4,6 +4,7 @@ from gitmind.indexing.chunkers.models import Chunk
 from gitmind.config import settings
 from uuid import uuid4
 from gitmind.indexing.embedder import embed_text
+from qdrant_client.models import Filter, FieldCondition, MatchValue
 
 client = QdrantClient(url=settings.qdrant_url)
 
@@ -17,14 +18,15 @@ def create_collection(collection_name: str):
             )
         )
 
-def store_chunk(chunk:Chunk):
+def store_chunk(chunk:Chunk,repo_url:str):
     vector_embedding = embed_text(chunk.text)
     point=PointStruct(
         id=str(uuid4()),
         vector=vector_embedding,
         payload={"text":chunk.text,
                  "path":chunk.path,
-                 "chunk_type":chunk.chunk_type
+                 "chunk_type":chunk.chunk_type,
+                 "repo_url":repo_url
                  }
     )
     client.upsert(
@@ -32,6 +34,20 @@ def store_chunk(chunk:Chunk):
     points=[point]
 )
     return True
+
+def delete_repository_chunks(repo_url: str):
+    client.delete(
+        collection_name="gitmind_code",
+        points_selector=Filter(
+            must=[
+                FieldCondition(
+                    key="repo_url",
+                    match=MatchValue(value=repo_url)
+                )
+            ]
+        )
+    )
+
     
    
             
