@@ -1,42 +1,16 @@
-from gitmind.indexing.chunkers import chunk_file
+from gitmind.indexing.chunkers.python_ast import chunk_python_ast
 
-# 1. Test Python AST chunker
-python_code = """def greet():
-    print("Hello")
+text = """
+from sentence_transformers import SentenceTransformer
 
-class User:
-    pass
+model = SentenceTransformer("all-MiniLM-L6-v2")
+
+def embed_text(text: str):
+    return model.encode(text).tolist()
 """
 
-python_chunks = chunk_file(python_code, "main.py")
+chunks = chunk_python_ast(text, "embedder.py")
 
-print("=== Python Chunks ===")
-for chunk in python_chunks:
-    print(chunk)
-
-
-# 2. Test Markdown chunker
-markdown_text = """# Introduction
-
-GitMind is a repository RAG system.
-
-## Installation
-
-Install the dependencies.
-"""
-
-markdown_chunks = chunk_file(markdown_text, "README.md")
-
-print("\n=== Markdown Chunks ===")
-for chunk in markdown_chunks:
-    print(chunk)
-
-
-# 3. Test Generic chunker
-plain_text = "This is a sample text file used to test the generic chunker."
-
-generic_chunks = chunk_file(plain_text, "notes.txt")
-
-print("\n=== Generic Chunks ===")
-for chunk in generic_chunks:
-    print(chunk)
+for chunk in chunks:
+    print("---- CHUNK ----")
+    print(chunk.text)

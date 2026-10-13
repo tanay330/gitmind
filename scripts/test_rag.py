@@ -1,20 +1,57 @@
-from gitmind.llm.client import ask_gitmind
+
 from gitmind.retrieval.router import search
-
-question = "How does GitMind fetch, chunk, embed, and store GitHub repository files?"
-
-answer = ask_gitmind(question)
-
-print("Question:", question)
-print("Answer:", answer)
+from gitmind.llm.client import generate_answer
 
 
-"""question = "How does GitMind fetch and process GitHub repository files?"
+def test_rag():
+    question = input("\nEnter your question: ")
 
-results = search(question, top_k=3)
+    # Step 1: Retrieve relevant chunks from Qdrant
+    top_k = 8
+    results = search(question, top_k=top_k)
 
-for result in results:
-    print("Score:", result.score)
-    print("File:", result.payload["path"])
-    print("Content:", result.payload["text"])
-    print("-" * 50)"""
+    print("\n" + "=" * 60)
+    print("RETRIEVED CHUNKS")
+    print("=" * 60)
+
+    if not results:
+        print("No relevant chunks found.")
+        return
+
+    # Step 2: Display each retrieved chunk
+    for index, result in enumerate(results, start=1):
+        payload = result.payload or {}
+
+        print(f"\nChunk #{index}")
+        print(f"File path: {payload.get('path', 'Unknown')}")
+        print(f"Chunk type: {payload.get('chunk_type', 'Unknown')}")
+        print(f"Similarity score: {result.score:.4f}")
+        print("-" * 40)
+        print(payload.get("text", "No text available"))
+
+    # Step 3: Build context for the LLM
+    context_parts = []
+
+    for result in results:
+        payload = result.payload or {}
+        text = payload.get("text", "")
+        path = payload.get("path", "Unknown")
+
+        if text:
+            context_parts.append(
+                f"File: {path}\nContent:\n{text}"
+            )
+
+    context = "\n\n".join(context_parts)
+
+    # Step 4: Generate the final answer
+    answer = generate_answer(question, context)
+
+    print("\n" + "=" * 60)
+    print("FINAL RAG ANSWER")
+    print("=" * 60)
+    print(answer)
+
+
+if __name__ == "__main__":
+    test_rag()

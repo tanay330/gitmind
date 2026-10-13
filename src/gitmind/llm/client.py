@@ -32,7 +32,7 @@ def generate_answer(question:str,context:str)-> str:
     return answer
         
 def ask_gitmind(question: str) -> str:
-    results = search(question, top_k=3)  
+    results = search(question, top_k=8)  
     context="\n\n".join(f"File: {result.payload['path']}\nContent: {result.payload['text']}" for result in results)    
     return generate_answer(question,context)
     
