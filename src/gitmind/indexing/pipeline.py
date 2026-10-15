@@ -24,6 +24,8 @@ def index_repository(repo_url: str):
             for chunk in chunks:
                 store_chunk(chunk,repo_url)
                 indexed_chunks+=1
+                
+                
     print(f"Indexed files: {indexed_files}")
     print(f"Indexed chunks: {indexed_chunks}")            
     
