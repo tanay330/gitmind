@@ -7,6 +7,7 @@ IGNORED_DIRS = {
     ".venv",
     "dist",
     "build",
+    "scripts",
 }
 MAX_FILE_SIZE = 1_000_000
 IGNORED_EXTENSIONS = {
@@ -20,6 +21,7 @@ IGNORED_EXTENSIONS = {
 def should_include(path:str,size:int)-> bool:
     parts=path.split("/")
     has_ignored=any(item in IGNORED_DIRS for item in parts)
+    
     if has_ignored:
         return False
     if size>MAX_FILE_SIZE:

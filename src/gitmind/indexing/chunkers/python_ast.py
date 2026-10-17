@@ -20,12 +20,16 @@ def chunk_python_ast(text:str,path:str):
                 
                 module_lines = []
             source = ast.get_source_segment(text, node)
-            chunk=Chunk(
-                 text=source,
-                 path=path,
-                 chunk_type="python_ast"
-            )
-            chunks.append(chunk)    
+            if source:
+                chunks.append(
+                    Chunk(
+                        text=source,
+                        path=path,
+                        chunk_type="python_ast",
+                    )
+                )
+
+              
         else:
             # Preserve module-level statements
             source = ast.get_source_segment(text, node)

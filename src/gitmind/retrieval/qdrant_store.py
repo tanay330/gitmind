@@ -45,12 +45,15 @@ def create_collection(collection_name: str):
         )
 
 
-def store_chunk(chunk: Chunk, repo_url: str):
-    dense_vector = embed_text(chunk.text)
+def build_point(chunk: Chunk, repo_url: str) -> PointStruct:
+    contextual_text = (
+        f"File: {chunk.path}\n"
+        f"Chunk type: {chunk.chunk_type}\n\n"
+        f"{chunk.text}"
+    )
 
-    sparse_embedding = list(
-        sparse_model.embed([chunk.text])
-    )[0]
+    dense_vector = embed_text(contextual_text)
+    sparse_embedding = list(sparse_model.embed([contextual_text]))[0]
 
     point = PointStruct(
         id=str(uuid4()),
@@ -69,12 +72,18 @@ def store_chunk(chunk: Chunk, repo_url: str):
         },
     )
 
+    return point
+
+
+def store_points(points: list[PointStruct]) -> None:
+    if not points:
+        return
+
     client.upsert(
         collection_name=COLLECTION_NAME,
-        points=[point],
+        points=points,
+        wait=True,
     )
-
-    return True
 
 
 def delete_repository_chunks(repo_url: str):
