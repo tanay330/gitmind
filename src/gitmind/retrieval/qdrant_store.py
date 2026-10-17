@@ -15,7 +15,7 @@ from qdrant_client.models import (
 
 from gitmind.config import settings
 from gitmind.indexing.chunkers.models import Chunk
-from gitmind.indexing.embedder import embed_text
+from gitmind.indexing.embedder import embed_texts
 
 
 client = QdrantClient(url=settings.qdrant_url)
@@ -45,34 +45,50 @@ def create_collection(collection_name: str):
         )
 
 
-def build_point(chunk: Chunk, repo_url: str) -> PointStruct:
-    contextual_text = (
-        f"File: {chunk.path}\n"
-        f"Chunk type: {chunk.chunk_type}\n\n"
-        f"{chunk.text}"
-    )
 
-    dense_vector = embed_text(contextual_text)
-    sparse_embedding = list(sparse_model.embed([contextual_text]))[0]
+def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]:
+    if not chunks:
+        return []
 
-    point = PointStruct(
-        id=str(uuid4()),
-        vector={
-            "dense": dense_vector,
-            "sparse": SparseVector(
-                indices=sparse_embedding.indices.tolist(),
-                values=sparse_embedding.values.tolist(),
-            ),
-        },
-        payload={
-            "text": chunk.text,
-            "path": chunk.path,
-            "chunk_type": chunk.chunk_type,
-            "repo_url": repo_url,
-        },
-    )
+    contextual_texts = [
+        (
+            f"File: {chunk.path}\n"
+            f"Chunk type: {chunk.chunk_type}\n\n"
+            f"{chunk.text}"
+        )
+        for chunk in chunks
+    ]
 
-    return point
+    dense_vectors = embed_texts(contextual_texts)
+
+    sparse_embeddings = list(sparse_model.embed(contextual_texts))
+
+    points = []
+
+    for chunk, dense_vector, sparse_embedding in zip(
+        chunks, dense_vectors, sparse_embeddings
+    ):
+        point = PointStruct(
+            id=str(uuid4()),
+            vector={
+                "dense": dense_vector,
+                "sparse": SparseVector(
+                    indices=sparse_embedding.indices.tolist(),
+                    values=sparse_embedding.values.tolist(),
+                ),
+            },
+            payload={
+                "text": chunk.text,
+                "path": chunk.path,
+                "chunk_type": chunk.chunk_type,
+                "repo_url": repo_url,
+            },
+        )
+
+        points.append(point)
+
+    return points
+
 
 
 def store_points(points: list[PointStruct]) -> None:
