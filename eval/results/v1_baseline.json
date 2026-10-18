@@ -1,0 +1,601 @@
+{
+  "label": "v1_baseline",
+  "top_k": 8,
+  "hit_rate": 1.0,
+  "avg_file_recall": 0.9722222222222222,
+  "by_style": {
+    "natural": 1.0,
+    "technical": 1.0
+  },
+  "foreign_chunk_rate": 0.07291666666666667,
+  "questions": [
+    {
+      "id": "gm-01",
+      "question": "Which models does GitMind use?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 0.6666666666666666,
+      "retrieved": [
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "from uuid import uuid4 from fastembed import SparseTextEmbedding from qdrant_client import"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/generic.py",
+          "text": "from gitmind.indexing.chunkers.models import Chunk from gitmind.indexing.chunkers.models i"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "text": "from dataclasses import dataclass from gitmind.indexing.embedder import embed_text from gi"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "text": "from sentence_transformers import SentenceTransformer model = SentenceTransformer(\"all-Min"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/markdown.py",
+          "text": "from gitmind.indexing.chunkers.models import Chunk"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/reranker.py",
+          "text": "from sentence_transformers import CrossEncoder model = CrossEncoder(\"cross-encoder/ms-marc"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/python_ast.py",
+          "text": "from gitmind.indexing.chunkers.models import Chunk import ast"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/models.py",
+          "text": "from dataclasses import dataclass"
+        }
+      ]
+    },
+    {
+      "id": "gm-02",
+      "question": "How does GitMind split Python files into chunks?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/markdown.py",
+          "text": "def chunk_markdown(text:str,path:str): lines=text.splitlines() current_section=[] chunks=["
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/github_client.py",
+          "text": "def parse_repo_url(url:str): parsed=urlparse(url) if parsed.netloc!=\"github.com\": raise Va"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/filters.py",
+          "text": "def should_include(path: str, size: int) -> bool: parts = path.split(\"/\") if any(item in I"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/python_ast.py",
+          "text": "def chunk_python_ast(text:str,path:str): tree=ast.parse(text) chunks=[] module_lines = [] "
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/pipeline.py",
+          "text": "def index_repository(repo_url: str): owner, repo = parse_repo_url(repo_url) repo_info = ge"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/generic.py",
+          "text": "def chunk_generic(text: str, path: str): chunks = [] for start in range(0, len(text), Chun"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/pipeline.py",
+          "text": "from gitmind.indexing.github_client import parse_repo_url,get_repo_info,list_repo_files,fe"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]: if not chunks: "
+        }
+      ]
+    },
+    {
+      "id": "gm-03",
+      "question": "How does the system download files from GitHub?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/llm/prompts.py",
+          "text": "SYSTEM_PROMPT = \"\"\" You are GitMind, an AI assistant that answers questions about GitHub r"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/github_client.py",
+          "text": "def list_repo_files(owner:str,repo:str,default_branch:str): api_url=f\"https://api.github.c"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/pipeline.py",
+          "text": "from gitmind.indexing.github_client import parse_repo_url,get_repo_info,list_repo_files,fe"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/github_client.py",
+          "text": "def parse_repo_url(url:str): parsed=urlparse(url) if parsed.netloc!=\"github.com\": raise Va"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/github_client.py",
+          "text": "def fetch_file(owner: str, repo: str, path: str): api_url = ( f\"https://api.github.com/rep"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/github_client.py",
+          "text": "def get_repo_info(owner:str,repo:str): api_url=f\"https://api.github.com/repos/{owner}/{rep"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/github_client.py",
+          "text": "import httpx from urllib.parse import urlparse import time from gitmind.config import sett"
+        },
+        {
+          "repo": "https://github.com/osaid400/calculator-system",
+          "path": "README.md",
+          "text": "## How to Run 1. Clone the repository ```bash git clone https://github.com/osaid400/Calcul"
+        }
+      ]
+    },
+    {
+      "id": "gm-04",
+      "question": "Which files get skipped during indexing?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/pipeline.py",
+          "text": "from gitmind.indexing.github_client import parse_repo_url,get_repo_info,list_repo_files,fe"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/pipeline.py",
+          "text": "def index_repository(repo_url: str): owner, repo = parse_repo_url(repo_url) repo_info = ge"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/github_client.py",
+          "text": "def list_repo_files(owner:str,repo:str,default_branch:str): api_url=f\"https://api.github.c"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/markdown.py",
+          "text": "from gitmind.indexing.chunkers.models import Chunk"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/filters.py",
+          "text": "from pathlib import Path IGNORED_DIRS = { \".git\", \"node_modules\", \"__pycache__\", \".venv\", "
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/github_client.py",
+          "text": "def get_repo_info(owner:str,repo:str): api_url=f\"https://api.github.com/repos/{owner}/{rep"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/github_client.py",
+          "text": "def fetch_file(owner: str, repo: str, path: str): api_url = ( f\"https://api.github.com/rep"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "text": "def embed_text(text: str) -> list[float]: return model.encode(text).tolist()"
+        }
+      ]
+    },
+    {
+      "id": "gm-05",
+      "question": "How are keyword search and vector search results combined?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "text": "def search(query: str, top_k: int = 5, candidate_k: int = 20): query_vector = embed_text(q"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/llm/client.py",
+          "text": "def ask_gitmind(question: str) -> str: results = search(question, top_k=8) context=\"\\n\\n\"."
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "def create_collection(collection_name: str): if not client.collection_exists(collection_na"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/reranker.py",
+          "text": "def rerank(query: str, results: list, top_k: int = 5): if not results: return [] pairs = ["
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "text": "def reciprocal_rank_fusion(dense_results, sparse_results, k=60): scores = {} points = {} f"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]: if not chunks: "
+        },
+        {
+          "repo": "https://github.com/osaid400/calculator-system",
+          "path": "main.py",
+          "text": "def main(): history = HistoryManager() operations = { 1: (\"Addition\", Calculator.add), 2: "
+        },
+        {
+          "repo": "https://github.com/osaid400/calculator-system",
+          "path": "history_manager.py",
+          "text": "class HistoryManager: def __init__(self, filename=HISTORY_FILE): self.filename = filename "
+        }
+      ]
+    },
+    {
+      "id": "gm-06",
+      "question": "Which SentenceTransformer model is initialized in embedder.py?",
+      "style": "technical",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "text": "from sentence_transformers import SentenceTransformer model = SentenceTransformer(\"all-Min"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "text": "def embed_texts(texts: list[str]) -> list[list[float]]: if not texts: return [] embeddings"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "text": "def embed_text(text: str) -> list[float]: return model.encode(text).tolist()"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "text": "from dataclasses import dataclass from gitmind.indexing.embedder import embed_text from gi"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "from uuid import uuid4 from fastembed import SparseTextEmbedding from qdrant_client import"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/reranker.py",
+          "text": "from sentence_transformers import CrossEncoder model = CrossEncoder(\"cross-encoder/ms-marc"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]: if not chunks: "
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/reranker.py",
+          "text": "def rerank(query: str, results: list, top_k: int = 5): if not results: return [] pairs = ["
+        }
+      ]
+    },
+    {
+      "id": "gm-07",
+      "question": "Explain the Qdrant collection setup and upsert logic",
+      "style": "technical",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "def store_points(points: list[PointStruct]) -> None: if not points: return client.upsert( "
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "from uuid import uuid4 from fastembed import SparseTextEmbedding from qdrant_client import"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "def create_collection(collection_name: str): if not client.collection_exists(collection_na"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "def recreate_collection(collection_name: str): if client.collection_exists(collection_name"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "def delete_repository_chunks(repo_url: str): client.delete( collection_name=COLLECTION_NAM"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "text": "from dataclasses import dataclass from gitmind.indexing.embedder import embed_text from gi"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "docker-compose.yml",
+          "text": "services: qdrant: image: qdrant/qdrant ports: - \"6333:6333\" volumes: - qdrant_data:/qdrant"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/pipeline.py",
+          "text": "from gitmind.indexing.github_client import parse_repo_url,get_repo_info,list_repo_files,fe"
+        }
+      ]
+    },
+    {
+      "id": "gm-08",
+      "question": "How does the app read API keys and settings?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/llm/client.py",
+          "text": "from groq import Groq from gitmind.config import settings from gitmind.llm.prompts import "
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/config.py",
+          "text": "class Settings(BaseSettings): github_token: str qdrant_url: str = \"http://localhost:6333\" "
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/github_client.py",
+          "text": "def list_repo_files(owner:str,repo:str,default_branch:str): api_url=f\"https://api.github.c"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/github_client.py",
+          "text": "def fetch_file(owner: str, repo: str, path: str): api_url = ( f\"https://api.github.com/rep"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/github_client.py",
+          "text": "def get_repo_info(owner:str,repo:str): api_url=f\"https://api.github.com/repos/{owner}/{rep"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": ".env.example",
+          "text": "GITHUB_TOKEN=your_github_token_here GROQ_API_KEY=your_groq_key_here QDRANT_URL=http://loca"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "pyproject.toml",
+          "text": "[project] name = \"day17-gitmind\" version = \"0.1.0\" description = \"Add your description her"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "uv.lock",
+          "text": ", { name = \"groq\" }, { name = \"httpx\" }, { name = \"pydantic-settings\" }, { name = \"qdrant-"
+        }
+      ]
+    },
+    {
+      "id": "gm-09",
+      "question": "Which model does GitMind use?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "from uuid import uuid4 from fastembed import SparseTextEmbedding from qdrant_client import"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "text": "from dataclasses import dataclass from gitmind.indexing.embedder import embed_text from gi"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "text": "from sentence_transformers import SentenceTransformer model = SentenceTransformer(\"all-Min"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/generic.py",
+          "text": "from gitmind.indexing.chunkers.models import Chunk from gitmind.indexing.chunkers.models i"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/markdown.py",
+          "text": "from gitmind.indexing.chunkers.models import Chunk"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/reranker.py",
+          "text": "from sentence_transformers import CrossEncoder model = CrossEncoder(\"cross-encoder/ms-marc"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/models.py",
+          "text": "from dataclasses import dataclass"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/python_ast.py",
+          "text": "from gitmind.indexing.chunkers.models import Chunk import ast"
+        }
+      ]
+    },
+    {
+      "id": "gm-10",
+      "question": "What embedding model is used?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "text": "def embed_texts(texts: list[str]) -> list[list[float]]: if not texts: return [] embeddings"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "text": "from dataclasses import dataclass from gitmind.indexing.embedder import embed_text from gi"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "from uuid import uuid4 from fastembed import SparseTextEmbedding from qdrant_client import"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "text": "def search(query: str, top_k: int = 5, candidate_k: int = 20): query_vector = embed_text(q"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "text": "from sentence_transformers import SentenceTransformer model = SentenceTransformer(\"all-Min"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "text": "def embed_text(text: str) -> list[float]: return model.encode(text).tolist()"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]: if not chunks: "
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/reranker.py",
+          "text": "from sentence_transformers import CrossEncoder model = CrossEncoder(\"cross-encoder/ms-marc"
+        }
+      ]
+    },
+    {
+      "id": "gm-11",
+      "question": "Which LLM generates the final answer?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/llm/client.py",
+          "text": "def generate_answer(question:str,context:str)-> str: prompt = f\"\"\" Answer the question usi"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/llm/client.py",
+          "text": "def ask_gitmind(question: str) -> str: results = search(question, top_k=8) context=\"\\n\\n\"."
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/llm/prompts.py",
+          "text": "SYSTEM_PROMPT = \"\"\" You are GitMind, an AI assistant that answers questions about GitHub r"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/llm/client.py",
+          "text": "from groq import Groq from gitmind.config import settings from gitmind.llm.prompts import "
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": ".gitignore",
+          "text": "# Python-generated files __pycache__/ *.py[oc] build/ dist/ wheels/ *.egg-info # Virtual e"
+        },
+        {
+          "repo": "https://github.com/osaid400/calculator-system",
+          "path": "main.py",
+          "text": "def main(): history = HistoryManager() operations = { 1: (\"Addition\", Calculator.add), 2: "
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "uv.lock",
+          "text": "20637fcb8f1bc11029e403b4538e6694744428d8246118e45719f944556/pillow-12.3.0-cp314-cp314t-man"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "uv.lock",
+          "text": "h = \"sha256:ae367d0cf6cb40f3ec60ebdb572022f3cc875bcf4c661d345f3dbf24571e7aa3\", size = 1060"
+        }
+      ]
+    },
+    {
+      "id": "gm-12",
+      "question": "What reranking model does the project use?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "text": "from dataclasses import dataclass from gitmind.indexing.embedder import embed_text from gi"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/reranker.py",
+          "text": "from sentence_transformers import CrossEncoder model = CrossEncoder(\"cross-encoder/ms-marc"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/reranker.py",
+          "text": "def rerank(query: str, results: list, top_k: int = 5): if not results: return [] pairs = ["
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "text": "def search(query: str, top_k: int = 5, candidate_k: int = 20): query_vector = embed_text(q"
+        },
+        {
+          "repo": "https://github.com/osaid400/calculator-system",
+          "path": "README.md",
+          "text": "# Calculator (Python) A console-based calculator built with Python, combining **functions*"
+        },
+        {
+          "repo": "https://github.com/tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "from uuid import uuid4 from fastembed import SparseTextEmbedding from qdrant_client import"
+        },
+        {
+          "repo": "https://github.com/osaid400/calculator-system",
+          "path": "README.md",
+          "text": "### Modules & Packages * Splitting a single-file project into logical modules (`calculator"
+        },
+        {
+          "repo": "https://github.com/osaid400/calculator-system",
+          "path": "README.md",
+          "text": "## Project Structure ```text Calculator/ \u2502 \u251c\u2500\u2500 main.py \u251c\u2500\u2500 calculator.py \u251c\u2500\u2500 history_manag"
+        }
+      ]
+    }
+  ]
+}

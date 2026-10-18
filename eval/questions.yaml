@@ -1,0 +1,85 @@
+- id: gm-01
+  repo: https://github.com/tanay330/gitmind
+  question: "Which models does GitMind use?"
+  expected_files:
+    - src/gitmind/indexing/embedder.py
+    - src/gitmind/retrieval/reranker.py
+    - src/gitmind/llm/client.py
+  style: natural
+
+- id: gm-02
+  repo: https://github.com/tanay330/gitmind
+  question: "How does GitMind split Python files into chunks?"
+  expected_files:
+    - src/gitmind/indexing/chunkers/python_ast.py
+  style: natural
+
+- id: gm-03
+  repo: https://github.com/tanay330/gitmind
+  question: "How does the system download files from GitHub?"
+  expected_files:
+    - src/gitmind/indexing/github_client.py
+  style: natural
+
+- id: gm-04
+  repo: https://github.com/tanay330/gitmind
+  question: "Which files get skipped during indexing?"
+  expected_files:
+    - src/gitmind/indexing/filters.py
+  style: natural
+
+- id: gm-05
+  repo: https://github.com/tanay330/gitmind
+  question: "How are keyword search and vector search results combined?"
+  expected_files:
+    - src/gitmind/retrieval/router.py
+  style: natural
+
+- id: gm-06
+  repo: https://github.com/tanay330/gitmind
+  question: "Which SentenceTransformer model is initialized in embedder.py?"
+  expected_files:
+    - src/gitmind/indexing/embedder.py
+  style: technical
+
+- id: gm-07
+  repo: https://github.com/tanay330/gitmind
+  question: "Explain the Qdrant collection setup and upsert logic"
+  expected_files:
+    - src/gitmind/retrieval/qdrant_store.py
+  style: technical
+
+- id: gm-08
+  repo: https://github.com/tanay330/gitmind
+  question: "How does the app read API keys and settings?"
+  expected_files:
+    - src/gitmind/config.py
+  style: natural
+
+- id: gm-09
+  repo: https://github.com/tanay330/gitmind
+  question: "Which model does GitMind use?"
+  expected_files:
+    - src/gitmind/indexing/embedder.py
+  style: natural
+
+- id: gm-10
+  repo: https://github.com/tanay330/gitmind
+  question: "What embedding model is used?"
+  expected_files:
+    - src/gitmind/indexing/embedder.py
+  style: natural
+
+- id: gm-11
+  repo: https://github.com/tanay330/gitmind
+  question: "Which LLM generates the final answer?"
+  expected_files:
+    - src/gitmind/llm/client.py
+  style: natural
+
+- id: gm-12
+  repo: https://github.com/tanay330/gitmind
+  question: "What reranking model does the project use?"
+  expected_files:
+    - src/gitmind/retrieval/reranker.py
+  style: natural  
