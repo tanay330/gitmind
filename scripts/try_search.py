@@ -1,7 +1,7 @@
 
 from gitmind.retrieval.router import search
 
-test_cases = [
+"""test_cases = [
     {
         "original": "Which embedding model does GitMind use?",
         "rewritten": (
@@ -50,6 +50,7 @@ test_cases = [
     },
 ]
 
+
 TOP_K = 8
 
 for case in test_cases:
@@ -83,4 +84,24 @@ for case in test_cases:
                 f"{i}. {result.score:.4f} | "
                 f"{payload.get('path')} | "
                 f"{payload.get('chunk_type')}"
-            )
+            )"""
+
+queries = [
+    "Where are the calculator's arithmetic operations implemented?",
+    "How is calculation history saved and loaded?",
+    "Where does the program display its menu and handle user input?",
+    "How does the calculator handle division by zero?",
+    "What features does the application support?",
+   ]
+
+for query in queries:
+    print("\nQUERY:", query)
+
+    results = search(query, top_k=5)
+
+    for rank, result in enumerate(results, start=1):
+        payload = result.payload or {}
+        path = payload.get("path", "")
+        text = payload.get("text", "")
+
+        print(f"{rank}. {path} | {text[:120]!r}")

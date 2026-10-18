@@ -5,7 +5,7 @@ TOP_K = 8
 
 test_questions = [
     {
-        "question": "Which embedding model does GitMind use?",
+        "question": "Which SentenceTransformer model is initialized in embedder.py?",
         "expected_file": "src/gitmind/indexing/embedder.py",
     },
     {
