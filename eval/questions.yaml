@@ -82,4 +82,40 @@
   question: "What reranking model does the project use?"
   expected_files:
     - src/gitmind/retrieval/reranker.py
-  style: natural  
+  style: natural
+
+
+- id: rq-01
+  repo: https://github.com/psf/requests
+  question: "How does requests handle cookies?"
+  expected_files:
+    - src/requests/cookies.py
+  style: natural
+
+- id: rq-02
+  repo: https://github.com/psf/requests
+  question: "How does basic authentication work?"
+  expected_files:
+    - src/requests/auth.py
+  style: natural
+
+- id: rq-03
+  repo: https://github.com/psf/requests
+  question: "Where are the custom exceptions defined?"
+  expected_files:
+    - src/requests/exceptions.py
+  style: natural
+
+- id: rq-04
+  repo: https://github.com/psf/requests
+  question: "How are redirects followed?"
+  expected_files:
+    - src/requests/sessions.py
+  style: natural
+
+- id: rq-05
+  repo: https://github.com/psf/requests
+  question: "How does connection pooling and retrying work?"
+  expected_files:
+    - src/requests/adapters.py
+  style: natural    

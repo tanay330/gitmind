@@ -1,13 +1,13 @@
 {
   "label": "v1_baseline",
   "top_k": 8,
-  "hit_rate": 1.0,
-  "avg_file_recall": 0.9722222222222222,
+  "hit_rate": 0.9411764705882353,
+  "avg_file_recall": 0.9215686274509803,
   "by_style": {
-    "natural": 1.0,
+    "natural": 0.9333333333333333,
     "technical": 1.0
   },
-  "foreign_chunk_rate": 0.07291666666666667,
+  "foreign_chunk_rate": 0.21323529411764705,
   "questions": [
     {
       "id": "gm-01",
@@ -111,48 +111,48 @@
       "id": "gm-03",
       "question": "How does the system download files from GitHub?",
       "style": "natural",
-      "hit": true,
-      "file_recall": 1.0,
+      "hit": false,
+      "file_recall": 0.0,
       "retrieved": [
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/advanced.rst",
+          "text": "'ve used. Let's find out. GitHub sends that information in the headers, so rather than dow"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "README.md",
+          "text": "# Requests [![Version](https://img.shields.io/pypi/v/requests.svg?maxAge=86400)](https://p"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": ".github/ISSUE_TEMPLATE.md",
+          "text": "## System Information $ python -m requests.help ``` <paste here> ``` This command is only "
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/advanced.rst",
+          "text": "hat. :: >>> print(content[u\"id\"]) 5804413 >>> body = json.dumps({u\"body\": u\"Sounds great! "
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": ".github/ISSUE_TEMPLATE/Bug_report.md",
+          "text": "## System Information $ python -m requests.help ```json { \"paste\": \"here\" } ``` <!-- This "
+        },
         {
           "repo": "https://github.com/tanay330/gitmind",
           "path": "src/gitmind/llm/prompts.py",
           "text": "SYSTEM_PROMPT = \"\"\" You are GitMind, an AI assistant that answers questions about GitHub r"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": "src/gitmind/indexing/github_client.py",
-          "text": "def list_repo_files(owner:str,repo:str,default_branch:str): api_url=f\"https://api.github.c"
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "text": "For example, GitHub redirects all HTTP requests to HTTPS:: >>> r = requests.get('http://gi"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": "src/gitmind/indexing/pipeline.py",
-          "text": "from gitmind.indexing.github_client import parse_repo_url,get_repo_info,list_repo_files,fe"
-        },
-        {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": "src/gitmind/indexing/github_client.py",
-          "text": "def parse_repo_url(url:str): parsed=urlparse(url) if parsed.netloc!=\"github.com\": raise Va"
-        },
-        {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": "src/gitmind/indexing/github_client.py",
-          "text": "def fetch_file(owner: str, repo: str, path: str): api_url = ( f\"https://api.github.com/rep"
-        },
-        {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": "src/gitmind/indexing/github_client.py",
-          "text": "def get_repo_info(owner:str,repo:str): api_url=f\"https://api.github.com/repos/{owner}/{rep"
-        },
-        {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": "src/gitmind/indexing/github_client.py",
-          "text": "import httpx from urllib.parse import urlparse import time from gitmind.config import sett"
-        },
-        {
-          "repo": "https://github.com/osaid400/calculator-system",
-          "path": "README.md",
-          "text": "## How to Run 1. Clone the repository ```bash git clone https://github.com/osaid400/Calcul"
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "text": "value3']} >>> r = requests.get('https://httpbin.org/get', params=payload) >>> print(r.url)"
         }
       ]
     },
@@ -200,8 +200,8 @@
         },
         {
           "repo": "https://github.com/tanay330/gitmind",
-          "path": "src/gitmind/indexing/embedder.py",
-          "text": "def embed_text(text: str) -> list[float]: return model.encode(text).tolist()"
+          "path": "src/gitmind/indexing/filters.py",
+          "text": "def should_include(path: str, size: int) -> bool: parts = path.split(\"/\") if any(item in I"
         }
       ]
     },
@@ -233,24 +233,24 @@
           "text": "def rerank(query: str, results: list, top_k: int = 5): if not results: return [] pairs = ["
         },
         {
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/utils.py",
+          "text": "def parse_dict_header(value: str) -> dict[str, str | None]: \"\"\"Parse lists of key, value p"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "ext/requests-logo.svg",
+          "text": "sform=\"translate(-2.92 -6.54)\"/><path class=\"cls-1077\" d=\"M498.44,960.06c-1.25.57-1.19,1.7"
+        },
+        {
           "repo": "https://github.com/tanay330/gitmind",
           "path": "src/gitmind/retrieval/router.py",
           "text": "def reciprocal_rank_fusion(dense_results, sparse_results, k=60): scores = {} points = {} f"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": "src/gitmind/retrieval/qdrant_store.py",
-          "text": "def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]: if not chunks: "
-        },
-        {
-          "repo": "https://github.com/osaid400/calculator-system",
-          "path": "main.py",
-          "text": "def main(): history = HistoryManager() operations = { 1: (\"Addition\", Calculator.add), 2: "
-        },
-        {
-          "repo": "https://github.com/osaid400/calculator-system",
-          "path": "history_manager.py",
-          "text": "class HistoryManager: def __init__(self, filename=HISTORY_FILE): self.filename = filename "
+          "repo": "https://github.com/psf/requests",
+          "path": "ext/requests-logo.svg",
+          "text": "=\"translate(-2.92 -6.54)\"/><path class=\"cls-521\" d=\"M471.39,642.76l1.35-1.43c1.1-.6,2.44-."
         }
       ]
     },
@@ -297,9 +297,9 @@
           "text": "def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]: if not chunks: "
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": "src/gitmind/retrieval/reranker.py",
-          "text": "def rerank(query: str, results: list, top_k: int = 5): if not results: return [] pairs = ["
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/models.py",
+          "text": "\"\"\" requests.models ~~~~~~~~~~~~~~~ This module contains the primary objects that power Re"
         }
       ]
     },
@@ -347,8 +347,8 @@
         },
         {
           "repo": "https://github.com/tanay330/gitmind",
-          "path": "src/gitmind/indexing/pipeline.py",
-          "text": "from gitmind.indexing.github_client import parse_repo_url,get_repo_info,list_repo_files,fe"
+          "path": "uv.lock",
+          "text": ", { name = \"groq\" }, { name = \"httpx\" }, { name = \"pydantic-settings\" }, { name = \"qdrant-"
         }
       ]
     },
@@ -361,43 +361,43 @@
       "retrieved": [
         {
           "repo": "https://github.com/tanay330/gitmind",
-          "path": "src/gitmind/llm/client.py",
-          "text": "from groq import Groq from gitmind.config import settings from gitmind.llm.prompts import "
-        },
-        {
-          "repo": "https://github.com/tanay330/gitmind",
           "path": "src/gitmind/config.py",
           "text": "class Settings(BaseSettings): github_token: str qdrant_url: str = \"http://localhost:6333\" "
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": "src/gitmind/indexing/github_client.py",
-          "text": "def list_repo_files(owner:str,repo:str,default_branch:str): api_url=f\"https://api.github.c"
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/advanced.rst",
+          "text": "nt to omit session-level keys from a dict parameter. To do this, you simply set that key's"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": "src/gitmind/indexing/github_client.py",
-          "text": "def fetch_file(owner: str, repo: str, path: str): api_url = ( f\"https://api.github.com/rep"
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/authentication.rst",
+          "text": "ts-oauthlib`` library allows Requests users to easily make OAuth 1 authenticated requests:"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": "src/gitmind/indexing/github_client.py",
-          "text": "def get_repo_info(owner:str,repo:str): api_url=f\"https://api.github.com/repos/{owner}/{rep"
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "text": "value3']} >>> r = requests.get('https://httpbin.org/get', params=payload) >>> print(r.url)"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": ".env.example",
-          "text": "GITHUB_TOKEN=your_github_token_here GROQ_API_KEY=your_groq_key_here QDRANT_URL=http://loca"
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/advanced.rst",
+          "text": "second:: s = requests.Session() r = s.get('https://httpbin.org/cookies', cookies={'from-my"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": "pyproject.toml",
-          "text": "[project] name = \"day17-gitmind\" version = \"0.1.0\" description = \"Add your description her"
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/api.rst",
+          "text": ".. _api: Developer Interface =================== .. module:: requests This part of the doc"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": "uv.lock",
-          "text": ", { name = \"groq\" }, { name = \"httpx\" }, { name = \"pydantic-settings\" }, { name = \"qdrant-"
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "text": "tes as they were returned, use ``Response.raw``. .. _custom-headers: Custom Headers ------"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/api.rst",
+          "text": "equests_log = logging.getLogger(\"urllib3\") requests_log.setLevel(logging.DEBUG) requests_l"
         }
       ]
     },
@@ -474,11 +474,6 @@
         },
         {
           "repo": "https://github.com/tanay330/gitmind",
-          "path": "src/gitmind/retrieval/router.py",
-          "text": "def search(query: str, top_k: int = 5, candidate_k: int = 20): query_vector = embed_text(q"
-        },
-        {
-          "repo": "https://github.com/tanay330/gitmind",
           "path": "src/gitmind/indexing/embedder.py",
           "text": "from sentence_transformers import SentenceTransformer model = SentenceTransformer(\"all-Min"
         },
@@ -493,9 +488,14 @@
           "text": "def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]: if not chunks: "
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": "src/gitmind/retrieval/reranker.py",
-          "text": "from sentence_transformers import CrossEncoder model = CrossEncoder(\"cross-encoder/ms-marc"
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/models.py",
+          "text": "class Request(RequestHooksMixin): \"\"\"A user-created :class:`Request <Request>` object. Use"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/utils.py",
+          "text": "\"\"\" requests.utils ~~~~~~~~~~~~~~ This module provides utility functions that are used wit"
         }
       ]
     },
@@ -517,34 +517,34 @@
           "text": "def ask_gitmind(question: str) -> str: results = search(question, top_k=8) context=\"\\n\\n\"."
         },
         {
+          "repo": "https://github.com/psf/requests",
+          "path": ".github/AI_POLICY.md",
+          "text": "## Legal There is ongoing legal uncertainty regarding the copyright status of LLM-generate"
+        },
+        {
           "repo": "https://github.com/tanay330/gitmind",
           "path": "src/gitmind/llm/prompts.py",
           "text": "SYSTEM_PROMPT = \"\"\" You are GitMind, an AI assistant that answers questions about GitHub r"
         },
         {
+          "repo": "https://github.com/psf/requests",
+          "path": ".github/AI_POLICY.md",
+          "text": "## Summary In practice, this means: - Pull requests that have an LLM product listed as co-"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": ".github/AI_POLICY.md",
+          "text": "## Human As the makers of software that is used by millions of people worldwide and with a"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": ".github/AI_POLICY.md",
+          "text": "# Generative AI / LLM Policy We appreciate that we can't realistically police how you auth"
+        },
+        {
           "repo": "https://github.com/tanay330/gitmind",
           "path": "src/gitmind/llm/client.py",
           "text": "from groq import Groq from gitmind.config import settings from gitmind.llm.prompts import "
-        },
-        {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": ".gitignore",
-          "text": "# Python-generated files __pycache__/ *.py[oc] build/ dist/ wheels/ *.egg-info # Virtual e"
-        },
-        {
-          "repo": "https://github.com/osaid400/calculator-system",
-          "path": "main.py",
-          "text": "def main(): history = HistoryManager() operations = { 1: (\"Addition\", Calculator.add), 2: "
-        },
-        {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": "uv.lock",
-          "text": "20637fcb8f1bc11029e403b4538e6694744428d8246118e45719f944556/pillow-12.3.0-cp314-cp314t-man"
-        },
-        {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": "uv.lock",
-          "text": "h = \"sha256:ae367d0cf6cb40f3ec60ebdb572022f3cc875bcf4c661d345f3dbf24571e7aa3\", size = 1060"
         }
       ]
     },
@@ -571,29 +571,274 @@
           "text": "def rerank(query: str, results: list, top_k: int = 5): if not results: return [] pairs = ["
         },
         {
+          "repo": "https://github.com/psf/requests",
+          "path": ".github/AI_POLICY.md",
+          "text": "# Generative AI / LLM Policy We appreciate that we can't realistically police how you auth"
+        },
+        {
           "repo": "https://github.com/tanay330/gitmind",
           "path": "src/gitmind/retrieval/router.py",
           "text": "def search(query: str, top_k: int = 5, candidate_k: int = 20): query_vector = embed_text(q"
         },
         {
-          "repo": "https://github.com/osaid400/calculator-system",
-          "path": "README.md",
-          "text": "# Calculator (Python) A console-based calculator built with Python, combining **functions*"
+          "repo": "https://github.com/psf/requests",
+          "path": ".github/workflows/codeql-analysis.yml",
+          "text": "re) to build your code if your project # uses a compiled language #- run: | # make bootstr"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
-          "path": "src/gitmind/retrieval/qdrant_store.py",
-          "text": "from uuid import uuid4 from fastembed import SparseTextEmbedding from qdrant_client import"
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/_themes/LICENSE",
+          "text": "you to only use these themes in an unmodified manner just for Flask and Flask-related prod"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": ".github/AI_POLICY.md",
+          "text": "## Human As the makers of software that is used by millions of people worldwide and with a"
+        }
+      ]
+    },
+    {
+      "id": "rq-01",
+      "question": "How does requests handle cookies?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/cookies.py",
+          "text": "class MockRequest: \"\"\"Wraps a `requests.PreparedRequest` to mimic a `urllib2.Request`. The"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "text": "jar = requests.cookies.RequestsCookieJar() >>> jar.set('tasty_cookie', 'yum', domain='http"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "text": "r, separated by a comma. Cookies ------- If a response contains some Cookies, you can quic"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/advanced.rst",
+          "text": "second:: s = requests.Session() r = s.get('https://httpbin.org/cookies', cookies={'from-my"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/advanced.rst",
+          "text": "org/cookies') print(r.text) # '{\"cookies\": {\"sessioncookie\": \"123456789\"}}' Sessions can a"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/cookies.py",
+          "text": "def get_cookie_header(jar: CookieJar, request: PreparedRequest) -> str | None: \"\"\" Produce"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/cookies.py",
+          "text": "def extract_cookies_to_jar( jar: CookieJar, request: PreparedRequest, response: Any ) -> N"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/cookies.py",
+          "text": "class RequestsCookieJar(CookieJar, MutableMapping[str, str | None]): # type: ignore[misc] "
+        }
+      ]
+    },
+    {
+      "id": "rq-02",
+      "question": "How does basic authentication work?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/authentication.rst",
+          "text": ".. _authentication: Authentication ============== This document discusses using various ki"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/advanced.rst",
+          "text": ">>> r = requests.post(url=url, data=body) >>> r.status_code 404 Huh, that's weird. We prob"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/authentication.rst",
+          "text": "uests provides a handy shorthand for using it:: >>> requests.get('https://httpbin.org/basi"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/authentication.rst",
+          "text": "ion --------------------------- If you can't find a good implementation of the form of aut"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/auth.py",
+          "text": "class HTTPBasicAuth(AuthBase): \"\"\"Attaches HTTP Basic Authentication to the given Request "
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/advanced.rst",
+          "text": "_custom-auth: Custom Authentication --------------------- Requests allows you to specify y"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/authentication.rst",
+          "text": "r's home directory, which is `$HOME` on Unix based systems and `%USERPROFILE%` on Windows."
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/auth.py",
+          "text": "class HTTPProxyAuth(HTTPBasicAuth): \"\"\"Attaches HTTP Proxy Authentication to a given Reque"
+        }
+      ]
+    },
+    {
+      "id": "rq-03",
+      "question": "Where are the custom exceptions defined?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/exceptions.py",
+          "text": "class RetryError(RequestException): \"\"\"Custom retries logic failed\"\"\""
         },
         {
           "repo": "https://github.com/osaid400/calculator-system",
           "path": "README.md",
-          "text": "### Modules & Packages * Splitting a single-file project into logical modules (`calculator"
+          "text": "### Python Fundamentals * Functions * Parameters & Return Values * Conditional Statements "
         },
         {
-          "repo": "https://github.com/osaid400/calculator-system",
-          "path": "README.md",
-          "text": "## Project Structure ```text Calculator/ \u2502 \u251c\u2500\u2500 main.py \u251c\u2500\u2500 calculator.py \u251c\u2500\u2500 history_manag"
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/adapters.py",
+          "text": "\"\"\" requests.adapters ~~~~~~~~~~~~~~~~~ This module contains the transport adapters that R"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/exceptions.py",
+          "text": "\"\"\" requests.exceptions ~~~~~~~~~~~~~~~~~~~ This module contains the set of Requests' exce"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/advanced.rst",
+          "text": "_custom-auth: Custom Authentication --------------------- Requests allows you to specify y"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "text": "out. Errors and Exceptions --------------------- In the event of a network problem (e.g. D"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/exceptions.py",
+          "text": "class URLRequired(RequestException): \"\"\"A valid URL is required to make a request.\"\"\""
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/exceptions.py",
+          "text": "class RequestsDependencyWarning(RequestsWarning): \"\"\"An imported dependency doesn't match "
+        }
+      ]
+    },
+    {
+      "id": "rq-04",
+      "question": "How are redirects followed?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "tests/test_lowlevel.py",
+          "text": "def test_digestauth_401_count_reset_on_redirect(): \"\"\"Ensure we correctly reset num_401_ca"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "text": "For example, GitHub redirects all HTTP requests to HTTPS:: >>> r = requests.get('http://gi"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/sessions.py",
+          "text": "class SessionRedirectMixin: max_redirects: int trust_env: bool cookies: RequestsCookieJar "
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "tests/test_requests.py",
+          "text": "class RedirectSession(SessionRedirectMixin): def __init__(self, order_of_redirects): self."
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "tests/test_requests.py",
+          "text": "def test_requests_are_updated_each_time(httpbin): session = RedirectSession([303, 307]) pr"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "tests/test_lowlevel.py",
+          "text": "def test_redirect_rfc1808_to_non_ascii_location(): path = '\u0161' expected_path = b'%C5%A1' re"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "tests/test_lowlevel.py",
+          "text": "def test_fragment_update_on_redirect(): \"\"\"Verify we only append previous fragment if one "
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/utils.py",
+          "text": "def rewind_body(prepared_request: PreparedRequest) -> None: \"\"\"Move file pointer back to i"
+        }
+      ]
+    },
+    {
+      "id": "rq-05",
+      "question": "How does connection pooling and retrying work?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/adapters.py",
+          "text": "class HTTPAdapter(BaseAdapter): \"\"\"The built-in HTTP Adapter for urllib3. Provides a gener"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/index.rst",
+          "text": ".github.com/973705>`_. **Requests** allows you to send HTTP/1.1 requests extremely easily."
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/advanced.rst",
+          "text": "etries ^^^^^^^^^^^^^^^^^^^^^^^^^^ By default, Requests does not retry failed connections. "
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/advanced.rst",
+          "text": ".. _advanced: Advanced Usage ============== This document covers some of Requests more adv"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/advanced.rst",
+          "text": "not installed, this led to extremely out-of-date certificate bundles when using significan"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "src/requests/exceptions.py",
+          "text": "class ConnectTimeout(ConnectionError, Timeout): \"\"\"The request timed out while trying to c"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/advanced.rst",
+          "text": "ropriate connection! Note that connections are only released back to the pool for reuse on"
+        },
+        {
+          "repo": "https://github.com/psf/requests",
+          "path": "docs/user/advanced.rst",
+          "text": "ponse.raw <requests.Response.raw>`. If you set ``stream`` to ``True`` when making a reques"
         }
       ]
     }
