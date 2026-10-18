@@ -1,8 +1,10 @@
 """Retrieval evaluation.
 
 Usage:
-    uv run python eval/run_eval.py v1_baseline          # short summary
-    uv run python eval/run_eval.py v1_baseline gm-09    # also show retrieved chunks for gm-09
+    uv run python eval/run_eval.py v1_baseline                          # v1 search
+    uv run python eval/run_eval.py run4 --v2                            # v2 search
+    uv run python eval/run_eval.py run4 --v2 --guarantee=2 gm-01 gm-14  # options, and show chunks for two questions
+    uv run python eval/run_eval.py run3 --v2 --rerank                   # with reranking
 """
 import contextlib
 import io
@@ -12,8 +14,6 @@ from collections import defaultdict
 from pathlib import Path
 
 import yaml
-
-from gitmind.retrieval.router import search
 
 ROOT = Path(__file__).resolve().parent
 QUESTIONS_FILE = ROOT / "questions.yaml"
@@ -27,26 +27,63 @@ def load_questions(path: Path) -> list[dict]:
         return yaml.safe_load(f)
 
 
-def normalize_repo(url: str | None) -> str | None:
-    if not url:
+def normalize_repo(value: str | None) -> str | None:
+    if not value:
         return None
-    url = url.strip().rstrip("/")
-    if url.endswith(".git"):
-        url = url[:-4]
-    return url.lower()
-
-
-def short_repo(repo: str | None) -> str:
-    return repo.split("github.com/")[-1] if repo else "?"
+    value = value.strip().rstrip("/")
+    if value.endswith(".git"):
+        value = value[:-4]
+    value = value.lower()
+    for prefix in ("https://github.com/", "http://github.com/", "https://www.github.com/"):
+        if value.startswith(prefix):
+            value = value[len(prefix):]
+    return value
 
 
 def preview(text: str) -> str:
     return " ".join(text.split())[:PREVIEW_CHARS]
 
 
-def run(label: str, show_ids: set[str]) -> None:
+def parse_args(argv: list[str]):
+    engine = "v1"
+    options = {}
+    positional = []
+    for arg in argv:
+        if arg == "--v2":
+            engine = "v2"
+        elif arg == "--rerank":
+            options["use_rerank"] = True
+        elif arg.startswith("--guarantee="):
+            options["guarantee"] = int(arg.split("=", 1)[1])
+        else:
+            positional.append(arg)
+    label = positional[0] if positional else "run"
+    return label, engine, options, set(positional[1:])
+
+
+def make_search(engine: str, options: dict):
+    if engine == "v2":
+        from gitmind.indexing.github_client import parse_repo_url
+        from gitmind.models import make_repo_id
+        from gitmind.retrieval.search import search as search_v2
+
+        def run_search(q: dict):
+            owner, repo = parse_repo_url(q["repo"])
+            return search_v2(
+                q["question"], make_repo_id(owner, repo), top_k=TOP_K, **options
+            )
+
+        return run_search
+
+    from gitmind.retrieval.router import search as search_v1
+
+    return lambda q: search_v1(q["question"], top_k=TOP_K)
+
+
+def run(label: str, engine: str, options: dict, show_ids: set[str]) -> None:
     RESULTS_DIR.mkdir(exist_ok=True)
     questions = load_questions(QUESTIONS_FILE)
+    run_search = make_search(engine, options)
 
     per_style = defaultdict(lambda: {"hits": 0, "total": 0})
     details = []
@@ -60,15 +97,18 @@ def run(label: str, show_ids: set[str]) -> None:
 
         # v1's search() prints a lot of debug text; hide it during evaluation
         with contextlib.redirect_stdout(io.StringIO()):
-            results = search(q["question"], top_k=TOP_K)
+            results = run_search(q)
 
         retrieved = []
         for r in results:
-            repo = normalize_repo(r.payload.get("repo_url"))
+            repo = normalize_repo(r.payload.get("repo_id") or r.payload.get("repo_url"))
+            start, end = r.payload.get("start_line"), r.payload.get("end_line")
+            where = f"{r.payload['path']}:{start}-{end}" if start else r.payload["path"]
             retrieved.append(
                 {
                     "repo": repo,
                     "path": r.payload["path"],
+                    "where": where,
                     "text": preview(r.payload.get("text", "")),
                 }
             )
@@ -104,24 +144,20 @@ def run(label: str, show_ids: set[str]) -> None:
             }
         )
 
-        # one short line per question
         status = "OK  " if file_recall == 1 else ("PART" if hit else "MISS")
         print(f"{q['id']:7} {status} recall {file_recall:4.0%}  {q['style']:9} {q['question']}")
         if file_recall < 1:
             missing = [f for f in q["expected_files"] if f not in found]
             print(f"        missing: {missing}")
 
-        # detailed view only for the questions you ask about
         if q["id"] in show_ids:
             for rank, item in enumerate(retrieved, start=1):
                 mark = "*" if item["path"] in q["expected_files"] else " "
-                print(
-                    f"        {rank}.{mark} {short_repo(item['repo'])} | "
-                    f"{item['path']} | {item['text']!r}"
-                )
+                print(f"        {rank}.{mark} {item['repo']} | {item['where']} | {item['text']!r}")
 
     total = len(questions)
-    print(f"\n=== {label} ===")
+    settings_text = "".join(f" {key}={value}" for key, value in options.items())
+    print(f"\n=== {label} ({engine}{settings_text}) ===")
     print(f"Overall Hit@{TOP_K}: {total_hits}/{total} = {total_hits / total:.0%}")
     print(f"Avg file recall: {recall_sum / total:.0%}")
     for style, s in per_style.items():
@@ -131,6 +167,8 @@ def run(label: str, show_ids: set[str]) -> None:
 
     out = {
         "label": label,
+        "engine": engine,
+        "options": options,
         "top_k": TOP_K,
         "hit_rate": total_hits / total,
         "avg_file_recall": recall_sum / total,
@@ -143,5 +181,5 @@ def run(label: str, show_ids: set[str]) -> None:
 
 
 if __name__ == "__main__":
-    label = sys.argv[1] if len(sys.argv) > 1 else "run"
-    run(label, set(sys.argv[2:]))
+    label, engine, options, show_ids = parse_args(sys.argv[1:])
+    run(label, engine, options, show_ids)
