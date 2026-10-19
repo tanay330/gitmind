@@ -1,8 +1,10 @@
 import ast
+import math
 
 from gitmind.models import Chunk
 
 MAX_CLASS_LINES = 60
+MAX_CHUNK_LINES = 40
 
 
 def _start_line(node) -> int:
@@ -23,6 +25,26 @@ def _make_chunk(repo_id, path, lines, name, kind, start, end) -> Chunk:
     )
 
 
+def _make_chunks(repo_id, path, lines, name, kind, start, end) -> list[Chunk]:
+    length = end - start + 1
+    if length <= MAX_CHUNK_LINES:
+        return [_make_chunk(repo_id, path, lines, name, kind, start, end)]
+
+    parts = math.ceil(length / MAX_CHUNK_LINES)
+    size = math.ceil(length / parts)
+    chunks = []
+    for index in range(parts):
+        part_start = start + index * size
+        part_end = min(part_start + size - 1, end)
+        chunks.append(
+            _make_chunk(
+                repo_id, path, lines,
+                f"{name} (part {index + 1}/{parts})", kind, part_start, part_end,
+            )
+        )
+    return chunks
+
+
 def _chunk_class(node, repo_id, path, lines) -> list[Chunk]:
     start = _start_line(node)
     end = node.end_lineno
@@ -32,16 +54,17 @@ def _chunk_class(node, repo_id, path, lines) -> list[Chunk]:
     ]
 
     if end - start + 1 <= MAX_CLASS_LINES or not methods:
-        return [_make_chunk(repo_id, path, lines, node.name, "class", start, end)]
+        return _make_chunks(repo_id, path, lines, node.name, "class", start, end)
 
-    chunks = [
-        _make_chunk(repo_id, path, lines, node.name, "class",
-                    start, _start_line(methods[0]) - 1)
-    ]
+    chunks = _make_chunks(
+        repo_id, path, lines, node.name, "class", start, _start_line(methods[0]) - 1
+    )
     for method in methods:
-        chunks.append(
-            _make_chunk(repo_id, path, lines, f"{node.name}.{method.name}",
-                        "method", _start_line(method), method.end_lineno)
+        chunks.extend(
+            _make_chunks(
+                repo_id, path, lines, f"{node.name}.{method.name}", "method",
+                _start_line(method), method.end_lineno,
+            )
         )
     return chunks
 
@@ -55,9 +78,9 @@ def chunk_python(content: str, path: str, repo_id: str) -> list[Chunk]:
 
     for node in tree.body:
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-            chunks.append(
-                _make_chunk(repo_id, path, lines, node.name, "function",
-                            _start_line(node), node.end_lineno)
+            chunks.extend(
+                _make_chunks(repo_id, path, lines, node.name, "function",
+                             _start_line(node), node.end_lineno)
             )
         elif isinstance(node, ast.ClassDef):
             chunks.extend(_chunk_class(node, repo_id, path, lines))
