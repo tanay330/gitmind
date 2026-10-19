@@ -1,5 +1,5 @@
 from dataclasses import asdict
-
+from gitmind.models import Chunk, split_identifiers
 from fastembed import SparseTextEmbedding
 from qdrant_client import QdrantClient
 from qdrant_client.models import (
@@ -68,7 +68,7 @@ def upsert_chunks(chunks: list[Chunk]) -> None:
 
     texts = [chunk.embedding_text() for chunk in chunks]
     dense_vectors = embed_texts(texts)
-    sparse_vectors = list(sparse_model.embed(texts))
+    sparse_vectors = list(sparse_model.embed([chunk.keyword_text() for chunk in chunks]))
 
     points = []
     for chunk, dense, sparse in zip(chunks, dense_vectors, sparse_vectors):
@@ -101,7 +101,9 @@ def search_dense(query: str, repo_id: str, limit: int = 20):
 
 
 def search_sparse(query: str, repo_id: str, limit: int = 20):
-    embedding = list(sparse_model.query_embed(query))[0]
+    
+    query_text = f"{query} {split_identifiers(query)}".strip()
+    embedding = list(sparse_model.query_embed(query_text))[0]
     vector = SparseVector(
         indices=embedding.indices.tolist(),
         values=embedding.values.tolist(),

@@ -1,0 +1,596 @@
+{
+  "label": "h_v1",
+  "engine": "v1",
+  "options": {},
+  "top_k": 8,
+  "hit_rate": 0.6,
+  "hit_at_3": 0.4,
+  "mrr": 0.3916666666666667,
+  "avg_file_recall": 0.6,
+  "by_style": {
+    "natural": 0.6
+  },
+  "foreign_chunk_rate": 0.3875,
+  "questions": [
+    {
+      "id": "h-rq-01",
+      "question": "How can a large response be read in pieces instead of loading it all into memory?",
+      "style": "natural",
+      "hit": false,
+      "first_rank": null,
+      "file_recall": 0.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "ropriate connection! Note that connections are only released back to the pool for reuse on"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "ponse.raw <requests.Response.raw>`. If you set ``stream`` to ``True`` when making a reques"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "s may return a JSON object in a failed response (e.g. error details with HTTP 500). Such J"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": ") >>> r.text { ... \"files\": { \"file\": \"some,data,to,send\\\\nanother,row,to,send\\\\n\" }, ... "
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "cess the :attr:`Response.content <requests.Response.content>` attribute with the ``stream`"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "streamed to a file:: with open(filename, 'wb') as fd: for chunk in r.iter_content(chunk_si"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "de=True): if line: print(json.loads(line)) .. warning:: :meth:`~requests.Response.iter_lin"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "value3']} >>> r = requests.get('https://httpbin.org/get', params=payload) >>> print(r.url)"
+        }
+      ]
+    },
+    {
+      "id": "h-rq-02",
+      "question": "How is the Link header of a response parsed?",
+      "style": "natural",
+      "hit": true,
+      "first_rank": 1,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/utils.py",
+          "where": "src/requests/utils.py",
+          "text": "def parse_header_links(value: str) -> list[dict[str, str]]: \"\"\"Return a list of parsed lin"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "Requests will automatically parse these link headers and make them easily consumable:: >>>"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/cookies.py",
+          "where": "src/requests/cookies.py",
+          "text": "class MockResponse: \"\"\"Wraps a `httplib.HTTPMessage` to mimic a `urllib.addinfourl`. ...wh"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "or example:: >>> r = requests.request('MKCOL', url, data=data) >>> r.status_code 200 # Ass"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/sessions.py",
+          "where": "src/requests/sessions.py",
+          "text": "class SessionRedirectMixin: max_redirects: int trust_env: bool cookies: RequestsCookieJar "
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/models.py",
+          "where": "src/requests/models.py",
+          "text": "class Response: \"\"\"The :class:`Response <Response>` object, which contains a server's resp"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/cookies.py",
+          "where": "src/requests/cookies.py",
+          "text": "class MockRequest: \"\"\"Wraps a `requests.PreparedRequest` to mimic a `urllib2.Request`. The"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "cess the :attr:`Response.content <requests.Response.content>` attribute with the ``stream`"
+        }
+      ]
+    },
+    {
+      "id": "h-rq-03",
+      "question": "How are query string parameters added to the request URL?",
+      "style": "natural",
+      "hit": true,
+      "first_rank": 6,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "e pairs in the URL after a question mark, e.g. ``httpbin.org/get?key=val``. Requests allow"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "uest are as obvious. For example, this is how you make an HTTP POST request:: >>> r = requ"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/index.rst",
+          "where": "docs/index.rst",
+          "text": ".github.com/973705>`_. **Requests** allows you to send HTTP/1.1 requests extremely easily."
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/api.py",
+          "where": "src/requests/api.py",
+          "text": "def request( method: str, url: _t.UriType, **kwargs: Unpack[_t.RequestKwargs] ) -> Respons"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/api.py",
+          "where": "src/requests/api.py",
+          "text": "def get( url: _t.UriType, params: _t.ParamsType = None, **kwargs: Unpack[_t.GetKwargs] ) -"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/models.py",
+          "where": "src/requests/models.py",
+          "text": "class RequestEncodingMixin: url: str | None @property def path_url(self) -> str: \"\"\"Build "
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "= requests.post(url, data=json.dumps(payload)) Please note that the above code will NOT ad"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/index.rst",
+          "where": "docs/index.rst",
+          "text": "thub/contributors/psf/requests.svg :target: https://github.com/psf/requests/graphs/contrib"
+        }
+      ]
+    },
+    {
+      "id": "h-rq-04",
+      "question": "How does requests read login credentials from a .netrc file?",
+      "style": "natural",
+      "hit": true,
+      "first_rank": 2,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/authentication.rst",
+          "where": "docs/user/authentication.rst",
+          "text": "uests provides a handy shorthand for using it:: >>> requests.get('https://httpbin.org/basi"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/utils.py",
+          "where": "src/requests/utils.py",
+          "text": "def get_netrc_auth( url: _t.UriType, raise_errors: bool = False ) -> tuple[str, str] | Non"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "cified by the `NETRC` environment variable. Check details in :ref:`netrc authentication <a"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/authentication.rst",
+          "where": "docs/user/authentication.rst",
+          "text": "r's home directory, which is `$HOME` on Unix based systems and `%USERPROFILE%` on Windows."
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "tes as they were returned, use ``Response.raw``. .. _custom-headers: Custom Headers ------"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "tests/test_utils.py",
+          "where": "tests/test_utils.py",
+          "text": "class TestGetNetrcAuth: def test_works(self, tmp_path, monkeypatch): netrc_path = tmp_path"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "README.md",
+          "where": "README.md",
+          "text": "## Supported Features & Best\u2013Practices Requests is ready for the demands of building robus"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "ponse.raw <requests.Response.raw>`. If you set ``stream`` to ``True`` when making a reques"
+        }
+      ]
+    },
+    {
+      "id": "h-rq-05",
+      "question": "Where is the package version number stored?",
+      "style": "natural",
+      "hit": false,
+      "first_rank": null,
+      "file_recall": 0.0,
+      "retrieved": [
+        {
+          "repo": "tanay330/gitmind",
+          "path": "uv.lock",
+          "where": "uv.lock",
+          "text": "7, upload-time = \"2026-07-23T20:16:12.938Z\" }, ] [[package]] name = \"anyio\" version = \"4.1"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "uv.lock",
+          "where": "uv.lock",
+          "text": ", hash = \"sha256:4936d1d6780fbe68db454f5e72a42ff64d1fd6397df9f363ae786930fd5c1cd4\", size ="
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "uv.lock",
+          "where": "uv.lock",
+          "text": "37515, upload-time = \"2025-04-24T03:35:24.344Z\" }, ] [[package]] name = \"h2\" version = \"4."
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "uv.lock",
+          "where": "uv.lock",
+          "text": "62f32e1af9685\", size = 68872, upload-time = \"2026-09-30T04:39:21.828Z\" }, ] [[package]] na"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "uv.lock",
+          "where": "uv.lock",
+          "text": "\"sha256:117bac03a25ede5df5440e855b32d556049ca169ead221505badf432fed4b101\", size = 5302, up"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "uv.lock",
+          "where": "uv.lock",
+          "text": "= 132079, upload-time = \"2026-09-05T10:42:37.923Z\" }, ] [[package]] name = \"certifi\" versi"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "uv.lock",
+          "where": "uv.lock",
+          "text": "08373f\", size = 355540, upload-time = \"2026-06-09T07:52:27.832Z\" }, { url = \"https://files"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "uv.lock",
+          "where": "uv.lock",
+          "text": "version = 1 revision = 3 requires-python = \">=3.11\" resolution-markers = [ \"python_full_ve"
+        }
+      ]
+    },
+    {
+      "id": "h-gm-01",
+      "question": "How does the markdown splitter decide where a new section starts?",
+      "style": "natural",
+      "hit": true,
+      "first_rank": 1,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/markdown.py",
+          "where": "src/gitmind/indexing/chunkers/markdown.py",
+          "text": "def chunk_markdown(text:str,path:str): lines=text.splitlines() current_section=[] chunks=["
+        },
+        {
+          "repo": "psf/requests",
+          "path": ".github/SECURITY.md",
+          "where": ".github/SECURITY.md",
+          "text": "### Timeline When you report an issue, one of the project members will respond to you with"
+        },
+        {
+          "repo": "psf/requests",
+          "path": ".github/SECURITY.md",
+          "where": ".github/SECURITY.md",
+          "text": "## Process This following information discusses the process the requests project follows i"
+        },
+        {
+          "repo": "osaid400/calculator-system",
+          "path": "README.md",
+          "where": "README.md",
+          "text": "### Main Menu ```text ========= Calculator ========= 1. Add 2. Subtract 3. Multiply 4. Div"
+        },
+        {
+          "repo": "psf/requests",
+          "path": ".github/AI_POLICY.md",
+          "where": ".github/AI_POLICY.md",
+          "text": "## Human As the makers of software that is used by millions of people worldwide and with a"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "tests/test_lowlevel.py",
+          "where": "tests/test_lowlevel.py",
+          "text": "def test_fragment_update_on_redirect(): \"\"\"Verify we only append previous fragment if one "
+        },
+        {
+          "repo": "psf/requests",
+          "path": "HISTORY.md",
+          "where": "HISTORY.md",
+          "text": "Release History =============== dev --- - \\[Short description of non-trivial change.\\] 2.3"
+        },
+        {
+          "repo": "osaid400/calculator-system",
+          "path": "README.md",
+          "where": "README.md",
+          "text": "### History ```text ================ Calculator History ================ 1. 15.0 + 5.0 = 2"
+        }
+      ]
+    },
+    {
+      "id": "h-gm-02",
+      "question": "How is the unique ID of each stored chunk generated?",
+      "style": "natural",
+      "hit": false,
+      "first_rank": null,
+      "file_recall": 0.0,
+      "retrieved": [
+        {
+          "repo": "tanay330/gitmind",
+          "path": ".gitignore",
+          "where": ".gitignore",
+          "text": "# Python-generated files __pycache__/ *.py[oc] build/ dist/ wheels/ *.egg-info # Virtual e"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "ext/requests-logo.svg",
+          "where": "ext/requests-logo.svg",
+          "text": "d=\"M536.82,310.83c-3.09,8.11-.91,12.38,8.36,16.37,9.23,4.71,19.28,4.14,29.13,4.14,3.68,0,7"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "t does this value will be set to the number of *bytes* in the file. Errors may occur if yo"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "onse generated from a Request. You can assign a hook function on a per-request basis by pa"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "ext/requests-logo.svg",
+          "where": "ext/requests-logo.svg",
+          "text": "420\" d=\"M479.89,854.28v-1.44a1.48,1.48,0,0,1-.1-1.78,8.23,8.23,0,0,1,5.47-1.77c2.62.66,5.1"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "ext/requests-logo.svg",
+          "where": "ext/requests-logo.svg",
+          "text": ".24-1.14,2.83-5.9,1.37-2.64-4.18-4.47-5.89a11.77,11.77,0,0,1-.84-1.66c-1.08-3.11-.37-6.69-"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "ext/requests-logo.svg",
+          "where": "ext/requests-logo.svg",
+          "text": ".51-5.66-1.6-8.87a4.88,4.88,0,0,1,1-1.65c1.42-.76,3.49.83,4.58-1.22l2.78,2.86A29.35,29.35,"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "ext/requests-logo.svg",
+          "where": "ext/requests-logo.svg",
+          "text": "3-2.6-1-4.54-3.85-5a6,6,0,0,1-1.57-1.18l.23-4.22c4.33-3.62-.55-6.85-.42-10.3a1.09,1.09,0,0"
+        }
+      ]
+    },
+    {
+      "id": "h-gm-03",
+      "question": "How is the context text for the language model built from the retrieved chunks?",
+      "style": "natural",
+      "hit": true,
+      "first_rank": 4,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]: if not chunks: "
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py",
+          "text": "def search(query: str, top_k: int = 5, candidate_k: int = 20): query_vector = embed_text(q"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "from uuid import uuid4 from fastembed import SparseTextEmbedding from qdrant_client import"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/llm/client.py",
+          "where": "src/gitmind/llm/client.py",
+          "text": "def generate_answer(question:str,context:str)-> str: prompt = f\"\"\" Answer the question usi"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py",
+          "text": "from dataclasses import dataclass from gitmind.indexing.embedder import embed_text from gi"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/reranker.py",
+          "where": "src/gitmind/retrieval/reranker.py",
+          "text": "def rerank(query: str, results: list, top_k: int = 5): if not results: return [] pairs = ["
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py",
+          "text": "def embed_texts(texts: list[str]) -> list[list[float]]: if not texts: return [] embeddings"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/markdown.py",
+          "where": "src/gitmind/indexing/chunkers/markdown.py",
+          "text": "def chunk_markdown(text:str,path:str): lines=text.splitlines() current_section=[] chunks=["
+        }
+      ]
+    },
+    {
+      "id": "h-gm-04",
+      "question": "What happens when downloading a file from GitHub times out?",
+      "style": "natural",
+      "hit": false,
+      "first_rank": null,
+      "file_recall": 0.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "seconds with the ``timeout`` parameter. Nearly all production code should use this paramet"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "'ve used. Let's find out. GitHub sends that information in the headers, so rather than dow"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "For example, GitHub redirects all HTTP requests to HTTPS:: >>> r = requests.get('http://gi"
+        },
+        {
+          "repo": "psf/requests",
+          "path": ".github/CONTRIBUTING.md",
+          "where": ".github/CONTRIBUTING.md",
+          "text": "## Good Bug Reports Please be aware of the following things when filing bug reports: 1. Av"
+        },
+        {
+          "repo": "psf/requests",
+          "path": ".github/SECURITY.md",
+          "where": ".github/SECURITY.md",
+          "text": "### Timeline When you report an issue, one of the project members will respond to you with"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "doc/html/rfc2988>`_. Once your client has connected to the server and sent the HTTP reques"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "y passing None as a timeout value and then retrieving a cup of coffee. :: r = requests.get"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": ".. _blocking-or-nonblocking: Blocking Or Non-Blocking? ------------------------- With the "
+        }
+      ]
+    },
+    {
+      "id": "h-gm-05",
+      "question": "What does the embedding function do when it gets an empty list of texts?",
+      "style": "natural",
+      "hit": true,
+      "first_rank": 1,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py",
+          "text": "def embed_texts(texts: list[str]) -> list[list[float]]: if not texts: return [] embeddings"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py",
+          "text": "def search(query: str, top_k: int = 5, candidate_k: int = 20): query_vector = embed_text(q"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]: if not chunks: "
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py",
+          "text": "def embed_text(text: str) -> list[float]: return model.encode(text).tolist()"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py",
+          "text": "from dataclasses import dataclass from gitmind.indexing.embedder import embed_text from gi"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "from uuid import uuid4 from fastembed import SparseTextEmbedding from qdrant_client import"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "tests/test_testserver.py",
+          "where": "tests/test_testserver.py",
+          "text": "class TestTestServer: def test_basic(self): \"\"\"messages are sent and received properly\"\"\" "
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py",
+          "text": "from sentence_transformers import SentenceTransformer model = SentenceTransformer(\"all-Min"
+        }
+      ]
+    }
+  ]
+}

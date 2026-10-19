@@ -1,13 +1,14 @@
 {
   "label": "v1_baseline",
+  "engine": "v1",
   "top_k": 8,
-  "hit_rate": 0.9411764705882353,
-  "avg_file_recall": 0.9215686274509803,
+  "hit_rate": 0.896551724137931,
+  "avg_file_recall": 0.8448275862068965,
   "by_style": {
-    "natural": 0.9333333333333333,
+    "natural": 0.8888888888888888,
     "technical": 1.0
   },
-  "foreign_chunk_rate": 0.21323529411764705,
+  "foreign_chunk_rate": 0.15086206896551724,
   "questions": [
     {
       "id": "gm-01",
@@ -17,43 +18,51 @@
       "file_recall": 0.6666666666666666,
       "retrieved": [
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
           "text": "from uuid import uuid4 from fastembed import SparseTextEmbedding from qdrant_client import"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/chunkers/generic.py",
+          "where": "src/gitmind/indexing/chunkers/generic.py",
           "text": "from gitmind.indexing.chunkers.models import Chunk from gitmind.indexing.chunkers.models i"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py",
           "text": "from dataclasses import dataclass from gitmind.indexing.embedder import embed_text from gi"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py",
           "text": "from sentence_transformers import SentenceTransformer model = SentenceTransformer(\"all-Min"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/chunkers/markdown.py",
+          "where": "src/gitmind/indexing/chunkers/markdown.py",
           "text": "from gitmind.indexing.chunkers.models import Chunk"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/reranker.py",
+          "where": "src/gitmind/retrieval/reranker.py",
           "text": "from sentence_transformers import CrossEncoder model = CrossEncoder(\"cross-encoder/ms-marc"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/chunkers/python_ast.py",
+          "where": "src/gitmind/indexing/chunkers/python_ast.py",
           "text": "from gitmind.indexing.chunkers.models import Chunk import ast"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/chunkers/models.py",
+          "where": "src/gitmind/indexing/chunkers/models.py",
           "text": "from dataclasses import dataclass"
         }
       ]
@@ -66,43 +75,51 @@
       "file_recall": 1.0,
       "retrieved": [
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/chunkers/markdown.py",
+          "where": "src/gitmind/indexing/chunkers/markdown.py",
           "text": "def chunk_markdown(text:str,path:str): lines=text.splitlines() current_section=[] chunks=["
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/github_client.py",
+          "where": "src/gitmind/indexing/github_client.py",
           "text": "def parse_repo_url(url:str): parsed=urlparse(url) if parsed.netloc!=\"github.com\": raise Va"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/filters.py",
+          "where": "src/gitmind/indexing/filters.py",
           "text": "def should_include(path: str, size: int) -> bool: parts = path.split(\"/\") if any(item in I"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/chunkers/python_ast.py",
+          "where": "src/gitmind/indexing/chunkers/python_ast.py",
           "text": "def chunk_python_ast(text:str,path:str): tree=ast.parse(text) chunks=[] module_lines = [] "
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/pipeline.py",
+          "where": "src/gitmind/indexing/pipeline.py",
           "text": "def index_repository(repo_url: str): owner, repo = parse_repo_url(repo_url) repo_info = ge"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/chunkers/generic.py",
+          "where": "src/gitmind/indexing/chunkers/generic.py",
           "text": "def chunk_generic(text: str, path: str): chunks = [] for start in range(0, len(text), Chun"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/pipeline.py",
+          "where": "src/gitmind/indexing/pipeline.py",
           "text": "from gitmind.indexing.github_client import parse_repo_url,get_repo_info,list_repo_files,fe"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
           "text": "def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]: if not chunks: "
         }
       ]
@@ -115,43 +132,51 @@
       "file_recall": 0.0,
       "retrieved": [
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
           "text": "'ve used. Let's find out. GitHub sends that information in the headers, so rather than dow"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "README.md",
+          "where": "README.md",
           "text": "# Requests [![Version](https://img.shields.io/pypi/v/requests.svg?maxAge=86400)](https://p"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": ".github/ISSUE_TEMPLATE.md",
+          "where": ".github/ISSUE_TEMPLATE.md",
           "text": "## System Information $ python -m requests.help ``` <paste here> ``` This command is only "
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
           "text": "hat. :: >>> print(content[u\"id\"]) 5804413 >>> body = json.dumps({u\"body\": u\"Sounds great! "
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": ".github/ISSUE_TEMPLATE/Bug_report.md",
+          "where": ".github/ISSUE_TEMPLATE/Bug_report.md",
           "text": "## System Information $ python -m requests.help ```json { \"paste\": \"here\" } ``` <!-- This "
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/llm/prompts.py",
+          "where": "src/gitmind/llm/prompts.py",
           "text": "SYSTEM_PROMPT = \"\"\" You are GitMind, an AI assistant that answers questions about GitHub r"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
           "text": "For example, GitHub redirects all HTTP requests to HTTPS:: >>> r = requests.get('http://gi"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
           "text": "value3']} >>> r = requests.get('https://httpbin.org/get', params=payload) >>> print(r.url)"
         }
       ]
@@ -164,43 +189,51 @@
       "file_recall": 1.0,
       "retrieved": [
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/pipeline.py",
+          "where": "src/gitmind/indexing/pipeline.py",
           "text": "from gitmind.indexing.github_client import parse_repo_url,get_repo_info,list_repo_files,fe"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/pipeline.py",
+          "where": "src/gitmind/indexing/pipeline.py",
           "text": "def index_repository(repo_url: str): owner, repo = parse_repo_url(repo_url) repo_info = ge"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/github_client.py",
+          "where": "src/gitmind/indexing/github_client.py",
           "text": "def list_repo_files(owner:str,repo:str,default_branch:str): api_url=f\"https://api.github.c"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/chunkers/markdown.py",
+          "where": "src/gitmind/indexing/chunkers/markdown.py",
           "text": "from gitmind.indexing.chunkers.models import Chunk"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/filters.py",
+          "where": "src/gitmind/indexing/filters.py",
           "text": "from pathlib import Path IGNORED_DIRS = { \".git\", \"node_modules\", \"__pycache__\", \".venv\", "
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/github_client.py",
+          "where": "src/gitmind/indexing/github_client.py",
           "text": "def get_repo_info(owner:str,repo:str): api_url=f\"https://api.github.com/repos/{owner}/{rep"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/github_client.py",
+          "where": "src/gitmind/indexing/github_client.py",
           "text": "def fetch_file(owner: str, repo: str, path: str): api_url = ( f\"https://api.github.com/rep"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/filters.py",
+          "where": "src/gitmind/indexing/filters.py",
           "text": "def should_include(path: str, size: int) -> bool: parts = path.split(\"/\") if any(item in I"
         }
       ]
@@ -213,43 +246,51 @@
       "file_recall": 1.0,
       "retrieved": [
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py",
           "text": "def search(query: str, top_k: int = 5, candidate_k: int = 20): query_vector = embed_text(q"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/llm/client.py",
+          "where": "src/gitmind/llm/client.py",
           "text": "def ask_gitmind(question: str) -> str: results = search(question, top_k=8) context=\"\\n\\n\"."
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
           "text": "def create_collection(collection_name: str): if not client.collection_exists(collection_na"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/reranker.py",
+          "where": "src/gitmind/retrieval/reranker.py",
           "text": "def rerank(query: str, results: list, top_k: int = 5): if not results: return [] pairs = ["
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/utils.py",
+          "where": "src/requests/utils.py",
           "text": "def parse_dict_header(value: str) -> dict[str, str | None]: \"\"\"Parse lists of key, value p"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "ext/requests-logo.svg",
+          "where": "ext/requests-logo.svg",
           "text": "sform=\"translate(-2.92 -6.54)\"/><path class=\"cls-1077\" d=\"M498.44,960.06c-1.25.57-1.19,1.7"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py",
           "text": "def reciprocal_rank_fusion(dense_results, sparse_results, k=60): scores = {} points = {} f"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "ext/requests-logo.svg",
+          "where": "ext/requests-logo.svg",
           "text": "=\"translate(-2.92 -6.54)\"/><path class=\"cls-521\" d=\"M471.39,642.76l1.35-1.43c1.1-.6,2.44-."
         }
       ]
@@ -262,43 +303,51 @@
       "file_recall": 1.0,
       "retrieved": [
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py",
           "text": "from sentence_transformers import SentenceTransformer model = SentenceTransformer(\"all-Min"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py",
           "text": "def embed_texts(texts: list[str]) -> list[list[float]]: if not texts: return [] embeddings"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py",
           "text": "def embed_text(text: str) -> list[float]: return model.encode(text).tolist()"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py",
           "text": "from dataclasses import dataclass from gitmind.indexing.embedder import embed_text from gi"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
           "text": "from uuid import uuid4 from fastembed import SparseTextEmbedding from qdrant_client import"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/reranker.py",
+          "where": "src/gitmind/retrieval/reranker.py",
           "text": "from sentence_transformers import CrossEncoder model = CrossEncoder(\"cross-encoder/ms-marc"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
           "text": "def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]: if not chunks: "
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/models.py",
+          "where": "src/requests/models.py",
           "text": "\"\"\" requests.models ~~~~~~~~~~~~~~~ This module contains the primary objects that power Re"
         }
       ]
@@ -311,43 +360,51 @@
       "file_recall": 1.0,
       "retrieved": [
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
           "text": "def store_points(points: list[PointStruct]) -> None: if not points: return client.upsert( "
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
           "text": "from uuid import uuid4 from fastembed import SparseTextEmbedding from qdrant_client import"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
           "text": "def create_collection(collection_name: str): if not client.collection_exists(collection_na"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
           "text": "def recreate_collection(collection_name: str): if client.collection_exists(collection_name"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
           "text": "def delete_repository_chunks(repo_url: str): client.delete( collection_name=COLLECTION_NAM"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py",
           "text": "from dataclasses import dataclass from gitmind.indexing.embedder import embed_text from gi"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "docker-compose.yml",
+          "where": "docker-compose.yml",
           "text": "services: qdrant: image: qdrant/qdrant ports: - \"6333:6333\" volumes: - qdrant_data:/qdrant"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "uv.lock",
+          "where": "uv.lock",
           "text": ", { name = \"groq\" }, { name = \"httpx\" }, { name = \"pydantic-settings\" }, { name = \"qdrant-"
         }
       ]
@@ -360,43 +417,51 @@
       "file_recall": 1.0,
       "retrieved": [
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/config.py",
+          "where": "src/gitmind/config.py",
           "text": "class Settings(BaseSettings): github_token: str qdrant_url: str = \"http://localhost:6333\" "
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
           "text": "nt to omit session-level keys from a dict parameter. To do this, you simply set that key's"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/authentication.rst",
+          "where": "docs/user/authentication.rst",
           "text": "ts-oauthlib`` library allows Requests users to easily make OAuth 1 authenticated requests:"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
           "text": "value3']} >>> r = requests.get('https://httpbin.org/get', params=payload) >>> print(r.url)"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
           "text": "second:: s = requests.Session() r = s.get('https://httpbin.org/cookies', cookies={'from-my"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/api.rst",
+          "where": "docs/api.rst",
           "text": ".. _api: Developer Interface =================== .. module:: requests This part of the doc"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
           "text": "tes as they were returned, use ``Response.raw``. .. _custom-headers: Custom Headers ------"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/api.rst",
+          "where": "docs/api.rst",
           "text": "equests_log = logging.getLogger(\"urllib3\") requests_log.setLevel(logging.DEBUG) requests_l"
         }
       ]
@@ -409,43 +474,51 @@
       "file_recall": 1.0,
       "retrieved": [
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
           "text": "from uuid import uuid4 from fastembed import SparseTextEmbedding from qdrant_client import"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py",
           "text": "from dataclasses import dataclass from gitmind.indexing.embedder import embed_text from gi"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py",
           "text": "from sentence_transformers import SentenceTransformer model = SentenceTransformer(\"all-Min"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/chunkers/generic.py",
+          "where": "src/gitmind/indexing/chunkers/generic.py",
           "text": "from gitmind.indexing.chunkers.models import Chunk from gitmind.indexing.chunkers.models i"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/chunkers/markdown.py",
+          "where": "src/gitmind/indexing/chunkers/markdown.py",
           "text": "from gitmind.indexing.chunkers.models import Chunk"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/reranker.py",
+          "where": "src/gitmind/retrieval/reranker.py",
           "text": "from sentence_transformers import CrossEncoder model = CrossEncoder(\"cross-encoder/ms-marc"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/chunkers/models.py",
+          "where": "src/gitmind/indexing/chunkers/models.py",
           "text": "from dataclasses import dataclass"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/chunkers/python_ast.py",
+          "where": "src/gitmind/indexing/chunkers/python_ast.py",
           "text": "from gitmind.indexing.chunkers.models import Chunk import ast"
         }
       ]
@@ -458,43 +531,51 @@
       "file_recall": 1.0,
       "retrieved": [
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py",
           "text": "def embed_texts(texts: list[str]) -> list[list[float]]: if not texts: return [] embeddings"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py",
           "text": "from dataclasses import dataclass from gitmind.indexing.embedder import embed_text from gi"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
           "text": "from uuid import uuid4 from fastembed import SparseTextEmbedding from qdrant_client import"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py",
           "text": "from sentence_transformers import SentenceTransformer model = SentenceTransformer(\"all-Min"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py",
           "text": "def embed_text(text: str) -> list[float]: return model.encode(text).tolist()"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
           "text": "def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]: if not chunks: "
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/models.py",
+          "where": "src/requests/models.py",
           "text": "class Request(RequestHooksMixin): \"\"\"A user-created :class:`Request <Request>` object. Use"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/utils.py",
+          "where": "src/requests/utils.py",
           "text": "\"\"\" requests.utils ~~~~~~~~~~~~~~ This module provides utility functions that are used wit"
         }
       ]
@@ -507,43 +588,51 @@
       "file_recall": 1.0,
       "retrieved": [
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/llm/client.py",
+          "where": "src/gitmind/llm/client.py",
           "text": "def generate_answer(question:str,context:str)-> str: prompt = f\"\"\" Answer the question usi"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/llm/client.py",
+          "where": "src/gitmind/llm/client.py",
           "text": "def ask_gitmind(question: str) -> str: results = search(question, top_k=8) context=\"\\n\\n\"."
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": ".github/AI_POLICY.md",
+          "where": ".github/AI_POLICY.md",
           "text": "## Legal There is ongoing legal uncertainty regarding the copyright status of LLM-generate"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/llm/prompts.py",
+          "where": "src/gitmind/llm/prompts.py",
           "text": "SYSTEM_PROMPT = \"\"\" You are GitMind, an AI assistant that answers questions about GitHub r"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": ".github/AI_POLICY.md",
+          "where": ".github/AI_POLICY.md",
           "text": "## Summary In practice, this means: - Pull requests that have an LLM product listed as co-"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": ".github/AI_POLICY.md",
+          "where": ".github/AI_POLICY.md",
           "text": "## Human As the makers of software that is used by millions of people worldwide and with a"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": ".github/AI_POLICY.md",
+          "where": ".github/AI_POLICY.md",
           "text": "# Generative AI / LLM Policy We appreciate that we can't realistically police how you auth"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/llm/client.py",
+          "where": "src/gitmind/llm/client.py",
           "text": "from groq import Groq from gitmind.config import settings from gitmind.llm.prompts import "
         }
       ]
@@ -556,43 +645,51 @@
       "file_recall": 1.0,
       "retrieved": [
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py",
           "text": "from dataclasses import dataclass from gitmind.indexing.embedder import embed_text from gi"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/reranker.py",
+          "where": "src/gitmind/retrieval/reranker.py",
           "text": "from sentence_transformers import CrossEncoder model = CrossEncoder(\"cross-encoder/ms-marc"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/reranker.py",
+          "where": "src/gitmind/retrieval/reranker.py",
           "text": "def rerank(query: str, results: list, top_k: int = 5): if not results: return [] pairs = ["
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": ".github/AI_POLICY.md",
+          "where": ".github/AI_POLICY.md",
           "text": "# Generative AI / LLM Policy We appreciate that we can't realistically police how you auth"
         },
         {
-          "repo": "https://github.com/tanay330/gitmind",
+          "repo": "tanay330/gitmind",
           "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py",
           "text": "def search(query: str, top_k: int = 5, candidate_k: int = 20): query_vector = embed_text(q"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": ".github/workflows/codeql-analysis.yml",
+          "where": ".github/workflows/codeql-analysis.yml",
           "text": "re) to build your code if your project # uses a compiled language #- run: | # make bootstr"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/_themes/LICENSE",
+          "where": "docs/_themes/LICENSE",
           "text": "you to only use these themes in an unmodified manner just for Flask and Flask-related prod"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": ".github/AI_POLICY.md",
+          "where": ".github/AI_POLICY.md",
           "text": "## Human As the makers of software that is used by millions of people worldwide and with a"
         }
       ]
@@ -605,43 +702,51 @@
       "file_recall": 1.0,
       "retrieved": [
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/cookies.py",
+          "where": "src/requests/cookies.py",
           "text": "class MockRequest: \"\"\"Wraps a `requests.PreparedRequest` to mimic a `urllib2.Request`. The"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
           "text": "jar = requests.cookies.RequestsCookieJar() >>> jar.set('tasty_cookie', 'yum', domain='http"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
           "text": "r, separated by a comma. Cookies ------- If a response contains some Cookies, you can quic"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
           "text": "second:: s = requests.Session() r = s.get('https://httpbin.org/cookies', cookies={'from-my"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
           "text": "org/cookies') print(r.text) # '{\"cookies\": {\"sessioncookie\": \"123456789\"}}' Sessions can a"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/cookies.py",
+          "where": "src/requests/cookies.py",
           "text": "def get_cookie_header(jar: CookieJar, request: PreparedRequest) -> str | None: \"\"\" Produce"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/cookies.py",
+          "where": "src/requests/cookies.py",
           "text": "def extract_cookies_to_jar( jar: CookieJar, request: PreparedRequest, response: Any ) -> N"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/cookies.py",
+          "where": "src/requests/cookies.py",
           "text": "class RequestsCookieJar(CookieJar, MutableMapping[str, str | None]): # type: ignore[misc] "
         }
       ]
@@ -654,43 +759,51 @@
       "file_recall": 1.0,
       "retrieved": [
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/authentication.rst",
+          "where": "docs/user/authentication.rst",
           "text": ".. _authentication: Authentication ============== This document discusses using various ki"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
           "text": ">>> r = requests.post(url=url, data=body) >>> r.status_code 404 Huh, that's weird. We prob"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/authentication.rst",
+          "where": "docs/user/authentication.rst",
           "text": "uests provides a handy shorthand for using it:: >>> requests.get('https://httpbin.org/basi"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/authentication.rst",
+          "where": "docs/user/authentication.rst",
           "text": "ion --------------------------- If you can't find a good implementation of the form of aut"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/auth.py",
+          "where": "src/requests/auth.py",
           "text": "class HTTPBasicAuth(AuthBase): \"\"\"Attaches HTTP Basic Authentication to the given Request "
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
           "text": "_custom-auth: Custom Authentication --------------------- Requests allows you to specify y"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/authentication.rst",
+          "where": "docs/user/authentication.rst",
           "text": "r's home directory, which is `$HOME` on Unix based systems and `%USERPROFILE%` on Windows."
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/auth.py",
+          "where": "src/requests/auth.py",
           "text": "class HTTPProxyAuth(HTTPBasicAuth): \"\"\"Attaches HTTP Proxy Authentication to a given Reque"
         }
       ]
@@ -703,43 +816,51 @@
       "file_recall": 1.0,
       "retrieved": [
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/exceptions.py",
+          "where": "src/requests/exceptions.py",
           "text": "class RetryError(RequestException): \"\"\"Custom retries logic failed\"\"\""
         },
         {
-          "repo": "https://github.com/osaid400/calculator-system",
+          "repo": "osaid400/calculator-system",
           "path": "README.md",
+          "where": "README.md",
           "text": "### Python Fundamentals * Functions * Parameters & Return Values * Conditional Statements "
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/adapters.py",
+          "where": "src/requests/adapters.py",
           "text": "\"\"\" requests.adapters ~~~~~~~~~~~~~~~~~ This module contains the transport adapters that R"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/exceptions.py",
+          "where": "src/requests/exceptions.py",
           "text": "\"\"\" requests.exceptions ~~~~~~~~~~~~~~~~~~~ This module contains the set of Requests' exce"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
           "text": "_custom-auth: Custom Authentication --------------------- Requests allows you to specify y"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
           "text": "out. Errors and Exceptions --------------------- In the event of a network problem (e.g. D"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/exceptions.py",
+          "where": "src/requests/exceptions.py",
           "text": "class URLRequired(RequestException): \"\"\"A valid URL is required to make a request.\"\"\""
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/exceptions.py",
+          "where": "src/requests/exceptions.py",
           "text": "class RequestsDependencyWarning(RequestsWarning): \"\"\"An imported dependency doesn't match "
         }
       ]
@@ -752,43 +873,51 @@
       "file_recall": 1.0,
       "retrieved": [
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "tests/test_lowlevel.py",
+          "where": "tests/test_lowlevel.py",
           "text": "def test_digestauth_401_count_reset_on_redirect(): \"\"\"Ensure we correctly reset num_401_ca"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
           "text": "For example, GitHub redirects all HTTP requests to HTTPS:: >>> r = requests.get('http://gi"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/sessions.py",
+          "where": "src/requests/sessions.py",
           "text": "class SessionRedirectMixin: max_redirects: int trust_env: bool cookies: RequestsCookieJar "
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "tests/test_requests.py",
+          "where": "tests/test_requests.py",
           "text": "class RedirectSession(SessionRedirectMixin): def __init__(self, order_of_redirects): self."
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "tests/test_requests.py",
+          "where": "tests/test_requests.py",
           "text": "def test_requests_are_updated_each_time(httpbin): session = RedirectSession([303, 307]) pr"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "tests/test_lowlevel.py",
+          "where": "tests/test_lowlevel.py",
           "text": "def test_redirect_rfc1808_to_non_ascii_location(): path = '\u0161' expected_path = b'%C5%A1' re"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "tests/test_lowlevel.py",
+          "where": "tests/test_lowlevel.py",
           "text": "def test_fragment_update_on_redirect(): \"\"\"Verify we only append previous fragment if one "
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/utils.py",
+          "where": "src/requests/utils.py",
           "text": "def rewind_body(prepared_request: PreparedRequest) -> None: \"\"\"Move file pointer back to i"
         }
       ]
@@ -801,44 +930,736 @@
       "file_recall": 1.0,
       "retrieved": [
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/adapters.py",
+          "where": "src/requests/adapters.py",
           "text": "class HTTPAdapter(BaseAdapter): \"\"\"The built-in HTTP Adapter for urllib3. Provides a gener"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/index.rst",
+          "where": "docs/index.rst",
           "text": ".github.com/973705>`_. **Requests** allows you to send HTTP/1.1 requests extremely easily."
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
           "text": "etries ^^^^^^^^^^^^^^^^^^^^^^^^^^ By default, Requests does not retry failed connections. "
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
           "text": ".. _advanced: Advanced Usage ============== This document covers some of Requests more adv"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
           "text": "not installed, this led to extremely out-of-date certificate bundles when using significan"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "src/requests/exceptions.py",
+          "where": "src/requests/exceptions.py",
           "text": "class ConnectTimeout(ConnectionError, Timeout): \"\"\"The request timed out while trying to c"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
           "text": "ropriate connection! Note that connections are only released back to the pool for reuse on"
         },
         {
-          "repo": "https://github.com/psf/requests",
+          "repo": "psf/requests",
           "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
           "text": "ponse.raw <requests.Response.raw>`. If you set ``stream`` to ``True`` when making a reques"
+        }
+      ]
+    },
+    {
+      "id": "rq-06",
+      "question": "How does requests verify SSL certificates?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 0.5,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "ironment settings into session settings = s.merge_environment_settings(prepped.url, {}, No"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "sp = s.send(prepped, stream=stream, verify=verify, proxies=proxies, cert=cert, timeout=tim"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "to a CA_BUNDLE file or directory with certificates of trusted CAs:: >>> requests.get('http"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "cept any TLS certificate presented by the server, and will ignore hostname mismatches and/"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/community/recommended.rst",
+          "where": "docs/community/recommended.rst",
+          "text": ".. _recommended: Recommended Packages and Extensions =================================== R"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "wrong path or an invalid cert, you'll get a SSLError:: >>> requests.get('https://kennethre"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/adapters.py",
+          "where": "src/requests/adapters.py",
+          "text": "class BaseAdapter: \"\"\"The Base Transport Adapter\"\"\" def __init__(self) -> None: super().__"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "tests/testserver/server.py",
+          "where": "tests/testserver/server.py",
+          "text": "class TLSServer(Server): def __init__( self, *, handler=None, host=\"localhost\", port=0, re"
+        }
+      ]
+    },
+    {
+      "id": "rq-07",
+      "question": "How are HTTP status codes mapped to names?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/status_codes.py",
+          "where": "src/requests/status_codes.py",
+          "text": "r\"\"\" The ``codes`` object defines a mapping from common names for HTTP statuses to their n"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "/tools.ietf.org/html/rfc7230#section-3.2>`_, HTTP Header names are case-insensitive. So, w"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/models.py",
+          "where": "src/requests/models.py",
+          "text": "class Response: \"\"\"The :class:`Response <Response>` object, which contains a server's resp"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": ": File \"requests/models.py\", line 832, in raise_for_status raise http_error requests.excep"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "f it does this value will be set to the number of *bytes* in the file. Errors may occur if"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/status_codes.py",
+          "where": "src/requests/status_codes.py",
+          "text": "def _init(): for code, titles in _codes.items(): for title in titles: setattr(codes, title"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "le bit. Now, we could look at the documentation, but we might have a little more fun if we"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "uld confirm that GitHub responded correctly. If it has, we want to work out what type of c"
+        }
+      ]
+    },
+    {
+      "id": "rq-08",
+      "question": "How do request hooks work?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "rint some request method arguments at runtime:: >>> requests.get('https://httpbin.org/', h"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "onse generated from a Request. You can assign a hook function on a per-request basis by pa"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/sessions.py",
+          "where": "src/requests/sessions.py",
+          "text": "def merge_hooks( request_hooks: _t.HooksType, session_hooks: _t.HooksType, dict_class: typ"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/hooks.py",
+          "where": "src/requests/hooks.py",
+          "text": "\"\"\" requests.hooks ~~~~~~~~~~~~~~ This module provides the capabilities for the Requests h"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/authentication.rst",
+          "where": "docs/user/authentication.rst",
+          "text": "of authentication will additionally add hooks to provide further functionality. Further ex"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "st(url, files=multiple_files) >>> r.text { ... 'files': {'images': 'data:image/png;base64,"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/models.py",
+          "where": "src/requests/models.py",
+          "text": "class RequestHooksMixin: hooks: dict[str, list[_t.HookType]] def register_hook( self, even"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/models.py",
+          "where": "src/requests/models.py",
+          "text": "class PreparedRequest(RequestEncodingMixin, RequestHooksMixin): \"\"\"The fully mutable :clas"
+        }
+      ]
+    },
+    {
+      "id": "rq-09",
+      "question": "Where is the case-insensitive dictionary implemented?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "/tools.ietf.org/html/rfc7230#section-3.2>`_, HTTP Header names are case-insensitive. So, w"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/structures.py",
+          "where": "src/requests/structures.py",
+          "text": "class CaseInsensitiveDict(MutableMapping[str, _VT], Generic[_VT]): \"\"\"A case-insensitive `"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "tests/test_structures.py",
+          "where": "tests/test_structures.py",
+          "text": "class TestCaseInsensitiveDict: @pytest.fixture(autouse=True) def setup(self): \"\"\"CaseInsen"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": ": File \"requests/models.py\", line 832, in raise_for_status raise http_error requests.excep"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "tests/test_requests.py",
+          "where": "tests/test_requests.py",
+          "text": "class TestCaseInsensitiveDict: @pytest.mark.parametrize( \"cid\", ( CaseInsensitiveDict({\"Fo"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/sessions.py",
+          "where": "src/requests/sessions.py",
+          "text": "class Session(SessionRedirectMixin): \"\"\"A Requests session. Provides cookie persistence, c"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/utils.py",
+          "where": "src/requests/utils.py",
+          "text": "def default_headers() -> CaseInsensitiveDict[str]: \"\"\" :rtype: requests.structures.CaseIns"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/utils.py",
+          "where": "src/requests/utils.py",
+          "text": "def get_encoding_from_headers(headers: CaseInsensitiveDict[str]) -> str | None: \"\"\"Returns"
+        }
+      ]
+    },
+    {
+      "id": "rq-10",
+      "question": "How does requests handle proxies?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 0.3333333333333333,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "'http://example.org', proxies=proxies) Alternatively you can configure it once for an enti"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "initially explained above. See `#2018 <https://github.com/psf/requests/issues/2018>`_ for "
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/utils.py",
+          "where": "src/requests/utils.py",
+          "text": "def resolve_proxies( request: Request | PreparedRequest, proxies: dict[str, str] | None, t"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "de=True): if line: print(json.loads(line)) .. warning:: :meth:`~requests.Response.iter_lin"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/api.rst",
+          "where": "docs/api.rst",
+          "text": "for a proxy URL is now required. :: proxies = { \"http\": \"10.10.1.10:3128\", # use http://10"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/utils.py",
+          "where": "src/requests/utils.py",
+          "text": "def select_proxy(url: str, proxies: dict[str, str] | None) -> str | None: \"\"\"Select a prox"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/api.rst",
+          "where": "docs/api.rst",
+          "text": "new APIs, links to the relevant GitHub issues and some of the bug fixes, read Cory's blog_"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "pip``:: $ python -m pip install 'requests[socks]' Once you've installed those dependencies"
+        }
+      ]
+    },
+    {
+      "id": "rq-11",
+      "question": "How is JSON decoded from a response?",
+      "style": "natural",
+      "hit": false,
+      "file_recall": 0.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "s may return a JSON object in a failed response (e.g. error details with HTTP 500). Such J"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "`True`` and iterate over the response with :meth:`~requests.Response.iter_lines()`:: impor"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "se Content --------------------- There's also a builtin JSON decoder, in case you're deali"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "e as the value of ``r.encoding`` and Requests will handle the decoding for you. Binary Res"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/api.rst",
+          "where": "docs/api.rst",
+          "text": "igrating to 1.x ---------------- This section details the main differences between 0.x and"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "tests/test_requests.py",
+          "where": "tests/test_requests.py",
+          "text": "def test_json_decode_errors_are_serializable_deserializable(): json_decode_error = request"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "uld confirm that GitHub responded correctly. If it has, we want to work out what type of c"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/api.py",
+          "where": "src/requests/api.py",
+          "text": "def post( url: _t.UriType, data: _t.DataType = None, json: _t.JsonType = None, **kwargs: U"
+        }
+      ]
+    },
+    {
+      "id": "rq-12",
+      "question": "How are files encoded for multipart uploads?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "_content`` with a ``chunk_size`` parameter of ``None``. If you want to set a maximum size "
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "= requests.post(url, data=json.dumps(payload)) Please note that the above code will NOT ad"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "t does this value will be set to the number of *bytes* in the file. Errors may occur if yo"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/api.py",
+          "where": "src/requests/api.py",
+          "text": "def request( method: str, url: _t.UriType, **kwargs: Unpack[_t.RequestKwargs] ) -> Respons"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/models.py",
+          "where": "src/requests/models.py",
+          "text": "class Request(RequestHooksMixin): \"\"\"A user-created :class:`Request <Request>` object. Use"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": ") >>> r.text { ... \"files\": { \"file\": \"some,data,to,send\\\\nanother,row,to,send\\\\n\" }, ... "
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "st(url, files=multiple_files) >>> r.text { ... 'files': {'images': 'data:image/png;base64,"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "ropriate connection! Note that connections are only released back to the pool for reuse on"
+        }
+      ]
+    },
+    {
+      "id": "rq-13",
+      "question": "How does the top-level requests.get function work?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "second:: s = requests.Session() r = s.get('https://httpbin.org/cookies', cookies={'from-my"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "nt to omit session-level keys from a dict parameter. To do this, you simply set that key's"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "org/cookies') print(r.text) # '{\"cookies\": {\"sessioncookie\": \"123456789\"}}' Sessions can a"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "the advantages of having a Requests :class:`Session <requests.Session>` object. In particu"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "onse generated from a Request. You can assign a hook function on a per-request basis by pa"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "ollowing:: from requests import Request, Session s = Session() req = Request('POST', url, "
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "rbs: HTTP Verbs ---------- Requests provides access to almost the full range of HTTP verbs"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/api.py",
+          "where": "src/requests/api.py",
+          "text": "def get( url: _t.UriType, params: _t.ParamsType = None, **kwargs: Unpack[_t.GetKwargs] ) -"
+        }
+      ]
+    },
+    {
+      "id": "rq-14",
+      "question": "How is the default User-Agent header built?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/utils.py",
+          "where": "src/requests/utils.py",
+          "text": "def default_user_agent(name: str = \"python-requests\") -> str: \"\"\" Return a string represen"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/utils.py",
+          "where": "src/requests/utils.py",
+          "text": "def default_headers() -> CaseInsensitiveDict[str]: \"\"\" :rtype: requests.structures.CaseIns"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "tes as they were returned, use ``Response.raw``. .. _custom-headers: Custom Headers ------"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "e': 'text/html; charset=UTF-8', 'x-cache-lookup': 'HIT from cp1006.eqiad.wmnet:3128, MISS "
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "ttps://github.com/requests/requests-threads .. _`grequests`: https://github.com/spyoungtec"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "org/cookies') print(r.text) # '{\"cookies\": {\"sessioncookie\": \"123456789\"}}' Sessions can a"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "Requests will automatically parse these link headers and make them easily consumable:: >>>"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/adapters.py",
+          "where": "src/requests/adapters.py",
+          "text": "class HTTPAdapter(BaseAdapter): \"\"\"The built-in HTTP Adapter for urllib3. Provides a gener"
+        }
+      ]
+    },
+    {
+      "id": "gm-13",
+      "question": "Which function turns text into vectors?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py",
+          "text": "def search(query: str, top_k: int = 5, candidate_k: int = 20): query_vector = embed_text(q"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]: if not chunks: "
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py",
+          "text": "def embed_texts(texts: list[str]) -> list[list[float]]: if not texts: return [] embeddings"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "st(url, files=multiple_files) >>> r.text { ... 'files': {'images': 'data:image/png;base64,"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/python_ast.py",
+          "where": "src/gitmind/indexing/chunkers/python_ast.py",
+          "text": "def chunk_python_ast(text:str,path:str): tree=ast.parse(text) chunks=[] module_lines = [] "
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py",
+          "text": "def embed_text(text: str) -> list[float]: return model.encode(text).tolist()"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst",
+          "text": "onse generated from a Request. You can assign a hook function on a per-request basis by pa"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst",
+          "text": "ng, and change it, using the ``r.encoding`` property:: >>> r.encoding 'utf-8' >>> r.encodi"
+        }
+      ]
+    },
+    {
+      "id": "gm-14",
+      "question": "What instructions are given to the language model?",
+      "style": "natural",
+      "hit": false,
+      "file_recall": 0.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": ".github/AI_POLICY.md",
+          "where": ".github/AI_POLICY.md",
+          "text": "# Generative AI / LLM Policy We appreciate that we can't realistically police how you auth"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/models.py",
+          "where": "src/requests/models.py",
+          "text": "class PreparedRequest(RequestEncodingMixin, RequestHooksMixin): \"\"\"The fully mutable :clas"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py",
+          "text": "def embed_texts(texts: list[str]) -> list[list[float]]: if not texts: return [] embeddings"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/llm/client.py",
+          "where": "src/gitmind/llm/client.py",
+          "text": "def generate_answer(question:str,context:str)-> str: prompt = f\"\"\" Answer the question usi"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/index.rst",
+          "where": "docs/index.rst",
+          "text": "ially supports Python 3.10+, and runs great on PyPy. The User Guide -------------- This pa"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "from uuid import uuid4 from fastembed import SparseTextEmbedding from qdrant_client import"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py",
+          "text": "def embed_text(text: str) -> list[float]: return model.encode(text).tolist()"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/reranker.py",
+          "where": "src/gitmind/retrieval/reranker.py",
+          "text": "from sentence_transformers import CrossEncoder model = CrossEncoder(\"cross-encoder/ms-marc"
+        }
+      ]
+    },
+    {
+      "id": "gm-15",
+      "question": "How are chunks from the same repository deleted before indexing again?",
+      "style": "natural",
+      "hit": true,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/pipeline.py",
+          "where": "src/gitmind/indexing/pipeline.py",
+          "text": "def index_repository(repo_url: str): owner, repo = parse_repo_url(repo_url) repo_info = ge"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/pipeline.py",
+          "where": "src/gitmind/indexing/pipeline.py",
+          "text": "from gitmind.indexing.github_client import parse_repo_url,get_repo_info,list_repo_files,fe"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py",
+          "text": "def delete_repository_chunks(repo_url: str): client.delete( collection_name=COLLECTION_NAM"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/markdown.py",
+          "where": "src/gitmind/indexing/chunkers/markdown.py",
+          "text": "def chunk_markdown(text:str,path:str): lines=text.splitlines() current_section=[] chunks=["
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/github_client.py",
+          "where": "src/gitmind/indexing/github_client.py",
+          "text": "def parse_repo_url(url:str): parsed=urlparse(url) if parsed.netloc!=\"github.com\": raise Va"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/generic.py",
+          "where": "src/gitmind/indexing/chunkers/generic.py",
+          "text": "def chunk_generic(text: str, path: str): chunks = [] for start in range(0, len(text), Chun"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/python_ast.py",
+          "where": "src/gitmind/indexing/chunkers/python_ast.py",
+          "text": "def chunk_python_ast(text:str,path:str): tree=ast.parse(text) chunks=[] module_lines = [] "
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/__init__.py",
+          "where": "src/gitmind/indexing/chunkers/__init__.py",
+          "text": "from gitmind.indexing.chunkers.python_ast import chunk_python_ast from gitmind.indexing.ch"
         }
       ]
     }

@@ -1,0 +1,70 @@
+- id: h-rq-01
+  repo: https://github.com/psf/requests
+  question: "How can a large response be read in pieces instead of loading it all into memory?"
+  expected_files:
+    - src/requests/models.py
+  style: natural
+
+- id: h-rq-02
+  repo: https://github.com/psf/requests
+  question: "How is the Link header of a response parsed?"
+  expected_files:
+    - src/requests/utils.py
+    - src/requests/models.py
+  style: natural
+
+- id: h-rq-03
+  repo: https://github.com/psf/requests
+  question: "How are query string parameters added to the request URL?"
+  expected_files:
+    - src/requests/models.py
+  style: natural
+
+- id: h-rq-04
+  repo: https://github.com/psf/requests
+  question: "How does requests read login credentials from a .netrc file?"
+  expected_files:
+    - src/requests/utils.py
+  style: natural
+
+- id: h-rq-05
+  repo: https://github.com/psf/requests
+  question: "Where is the package version number stored?"
+  expected_files:
+    - src/requests/__version__.py
+  style: natural
+
+- id: h-gm-01
+  repo: https://github.com/tanay330/gitmind
+  question: "How does the markdown splitter decide where a new section starts?"
+  expected_files:
+    - src/gitmind/indexing/chunkers/markdown.py
+  style: natural
+
+- id: h-gm-02
+  repo: https://github.com/tanay330/gitmind
+  question: "How is the unique ID of each stored chunk generated?"
+  expected_files:
+    - src/gitmind/retrieval/qdrant_store.py
+  style: natural
+
+- id: h-gm-03
+  repo: https://github.com/tanay330/gitmind
+  question: "How is the context text for the language model built from the retrieved chunks?"
+  expected_files:
+    - src/gitmind/llm/client.py
+  style: natural
+
+- id: h-gm-04
+  repo: https://github.com/tanay330/gitmind
+  question: "What happens when downloading a file from GitHub times out?"
+  expected_files:
+    - src/gitmind/indexing/github_client.py
+  style: natural
+
+- id: h-gm-05
+  repo: https://github.com/tanay330/gitmind
+  question: "What does the embedding function do when it gets an empty list of texts?"
+  expected_files:
+    - src/gitmind/indexing/embedder.py
+  style: natural

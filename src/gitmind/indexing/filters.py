@@ -14,7 +14,11 @@ IGNORED_DIRS = {
     "vendor", ".next", "target", ".tox", ".idea", ".vscode","scripts","eval",
 }
 
-IGNORED_FILENAMES = {"package-lock.json", "pnpm-lock.yaml"}
+#IGNORED_FILENAMES = {"package-lock.json", "pnpm-lock.yaml"}
+IGNORED_FILENAMES = {
+    "package-lock.json", "pnpm-lock.yaml",
+    "history.md", "history.rst", "changelog.md", "changelog.rst", "changes.md", "news.md",
+}
 IGNORED_SUFFIXES = (".min.js",)
 
 IGNORED_DOC_LANGUAGES = {

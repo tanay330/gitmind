@@ -2,9 +2,9 @@
 
 Usage:
     uv run python eval/run_eval.py v1_baseline                          # v1 search
-    uv run python eval/run_eval.py run4 --v2                            # v2 search
-    uv run python eval/run_eval.py run4 --v2 --guarantee=2 gm-01 gm-14  # options, and show chunks for two questions
-    uv run python eval/run_eval.py run3 --v2 --rerank                   # with reranking
+    uv run python eval/run_eval.py run6 --v2 --guarantee=2              # v2 with options
+    uv run python eval/run_eval.py run6 --v2 gm-01 rq-04                # also show chunks for these questions
+    uv run python eval/run_eval.py h1 --v2 --questions=eval/heldout.yaml
 """
 import contextlib
 import io
@@ -55,6 +55,8 @@ def parse_args(argv: list[str]):
             options["use_rerank"] = True
         elif arg.startswith("--guarantee="):
             options["guarantee"] = int(arg.split("=", 1)[1])
+        elif arg.startswith("--questions="):
+            pass  # handled in the main block below
         else:
             positional.append(arg)
     label = positional[0] if positional else "run"
@@ -88,6 +90,8 @@ def run(label: str, engine: str, options: dict, show_ids: set[str]) -> None:
     per_style = defaultdict(lambda: {"hits": 0, "total": 0})
     details = []
     total_hits = 0
+    top3_hits = 0
+    reciprocal_sum = 0.0
     recall_sum = 0.0
     foreign = 0
     checked = 0
@@ -117,19 +121,25 @@ def run(label: str, engine: str, options: dict, show_ids: set[str]) -> None:
                 if repo != wanted_repo:
                     foreign += 1
 
+        def is_expected(item):
+            return item["path"] in q["expected_files"] and (
+                item["repo"] is None or item["repo"] == wanted_repo
+            )
+
         found = [
             f
             for f in q["expected_files"]
-            if any(
-                item["path"] == f
-                and (item["repo"] is None or item["repo"] == wanted_repo)
-                for item in retrieved
-            )
+            if any(item["path"] == f and is_expected(item) for item in retrieved)
         ]
         hit = len(found) > 0
         file_recall = len(found) / len(q["expected_files"])
 
+        ranks = [i for i, item in enumerate(retrieved, start=1) if is_expected(item)]
+        first_rank = ranks[0] if ranks else None
+
         total_hits += hit
+        top3_hits += 1 if first_rank and first_rank <= 3 else 0
+        reciprocal_sum += 1 / first_rank if first_rank else 0.0
         recall_sum += file_recall
         per_style[q["style"]]["total"] += 1
         per_style[q["style"]]["hits"] += hit
@@ -139,13 +149,18 @@ def run(label: str, engine: str, options: dict, show_ids: set[str]) -> None:
                 "question": q["question"],
                 "style": q["style"],
                 "hit": hit,
+                "first_rank": first_rank,
                 "file_recall": file_recall,
                 "retrieved": retrieved,
             }
         )
 
         status = "OK  " if file_recall == 1 else ("PART" if hit else "MISS")
-        print(f"{q['id']:7} {status} recall {file_recall:4.0%}  {q['style']:9} {q['question']}")
+        rank_text = first_rank if first_rank else "-"
+        print(
+            f"{q['id']:7} {status} rank {rank_text!s:>1} recall {file_recall:4.0%}  "
+            f"{q['style']:9} {q['question']}"
+        )
         if file_recall < 1:
             missing = [f for f in q["expected_files"] if f not in found]
             print(f"        missing: {missing}")
@@ -158,7 +173,9 @@ def run(label: str, engine: str, options: dict, show_ids: set[str]) -> None:
     total = len(questions)
     settings_text = "".join(f" {key}={value}" for key, value in options.items())
     print(f"\n=== {label} ({engine}{settings_text}) ===")
-    print(f"Overall Hit@{TOP_K}: {total_hits}/{total} = {total_hits / total:.0%}")
+    print(f"Hit@{TOP_K}: {total_hits}/{total} = {total_hits / total:.0%}")
+    print(f"Hit@3: {top3_hits}/{total} = {top3_hits / total:.0%}")
+    print(f"MRR: {reciprocal_sum / total:.3f}")
     print(f"Avg file recall: {recall_sum / total:.0%}")
     for style, s in per_style.items():
         print(f"  {style}: {s['hits']}/{s['total']} = {s['hits'] / s['total']:.0%}")
@@ -171,6 +188,8 @@ def run(label: str, engine: str, options: dict, show_ids: set[str]) -> None:
         "options": options,
         "top_k": TOP_K,
         "hit_rate": total_hits / total,
+        "hit_at_3": top3_hits / total,
+        "mrr": reciprocal_sum / total,
         "avg_file_recall": recall_sum / total,
         "by_style": {s: v["hits"] / v["total"] for s, v in per_style.items()},
         "foreign_chunk_rate": (foreign / checked) if checked else None,
@@ -181,5 +200,9 @@ def run(label: str, engine: str, options: dict, show_ids: set[str]) -> None:
 
 
 if __name__ == "__main__":
+    for arg in sys.argv[1:]:
+        if arg.startswith("--questions="):
+            QUESTIONS_FILE = Path(arg.split("=", 1)[1])
+
     label, engine, options, show_ids = parse_args(sys.argv[1:])
     run(label, engine, options, show_ids)

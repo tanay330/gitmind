@@ -17,7 +17,11 @@ MAX_FILES = 1500
 BATCH_SIZE = 64
 MIN_MODULE_CHARS = 60
 
-
+def _is_imports_only(text: str) -> bool:
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    return bool(lines) and all(
+        line.startswith(("import ", "from ", "#")) for line in lines
+    )
 def index_repository(repo_url: str) -> dict:
     owner, repo = parse_repo_url(repo_url)
     repo_id = make_repo_id(owner, repo)
@@ -52,7 +56,7 @@ def index_repository(repo_url: str) -> dict:
         chunks = [
             chunk
             for chunk in chunk_file(content, file["path"], repo_id)
-            if not (chunk.symbol_type == "module" and len(chunk.text) < MIN_MODULE_CHARS)
+            if not (chunk.symbol_type == "module" and  _is_imports_only(chunk.text))
         ]
 
         indexed_files += 1

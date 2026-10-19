@@ -1,0 +1,598 @@
+{
+  "label": "sh_g3",
+  "engine": "v2",
+  "options": {
+    "guarantee": 3
+  },
+  "top_k": 8,
+  "hit_rate": 0.8,
+  "hit_at_3": 0.7,
+  "mrr": 0.675,
+  "avg_file_recall": 0.8,
+  "by_style": {
+    "natural": 0.8
+  },
+  "foreign_chunk_rate": 0.0,
+  "questions": [
+    {
+      "id": "h-rq-01",
+      "question": "How can a large response be read in pieces instead of loading it all into memory?",
+      "style": "natural",
+      "hit": true,
+      "first_rank": 1,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/models.py",
+          "where": "src/requests/models.py:914-945",
+          "text": "def iter_content( self, chunk_size: int | None = 1, decode_unicode: bool = False ) -> Iter"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/models.py",
+          "where": "src/requests/models.py:994-1032",
+          "text": "def iter_lines( self, chunk_size: int = ITER_CHUNK_SIZE, decode_unicode: bool = False, del"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst:1057-1096",
+          "text": "Blocking Or Non-Blocking? ------------------------- With the default Transport Adapter in "
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst:321-360",
+          "text": "urllib3 :class:`urllib3.HTTPResponse <urllib3.response.HTTPResponse>` at :attr:`Response.r"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/models.py",
+          "where": "src/requests/models.py:946-977",
+          "text": "except SSLError as e: raise RequestsSSLError(e) else: # Standard file-like object. while T"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst:353-392",
+          "text": "files without reading them into memory. To stream and upload, simply provide a file-like o"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/dev/contributing.rst",
+          "where": "docs/dev/contributing.rst:129-165",
+          "text": "documentation files. This means a soft-limit of 79 characters wide in your text files and "
+        },
+        {
+          "repo": "psf/requests",
+          "path": "tests/test_requests.py",
+          "where": "tests/test_requests.py:1508-1525",
+          "text": "def test_response_chunk_size_type(self): \"\"\"Ensure that chunk_size is passed as None or an"
+        }
+      ]
+    },
+    {
+      "id": "h-rq-02",
+      "question": "How is the Link header of a response parsed?",
+      "style": "natural",
+      "hit": true,
+      "first_rank": 1,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/models.py",
+          "where": "src/requests/models.py:1126-1142",
+          "text": "@property def links(self) -> dict[str, dict[str, str]]: \"\"\"Returns the parsed header links"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/models.py",
+          "where": "src/requests/models.py:765-787",
+          "text": "def __init__(self) -> None: self._content = False self._content_consumed = False self._nex"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst:193-232",
+          "text": "may better fit your use cases. .. note:: An important note about using ``Response.iter_con"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/utils.py",
+          "where": "src/requests/utils.py:965-999",
+          "text": "def parse_header_links(value: str) -> list[dict[str, str]]: \"\"\"Return a list of parsed lin"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst:929-968",
+          "text": "From time to time you may be working with a server that, for whatever reason, allows use o"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "tests/test_requests.py",
+          "where": "tests/test_requests.py:1272-1296",
+          "text": "def test_links(self): r = requests.Response() r.headers = { \"cache-control\": \"public, max-"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "HISTORY.md",
+          "where": "HISTORY.md:241-320",
+          "text": "Users who wish to stay on urllib3 1.x can pin to `urllib3<2`. 2.29.0 (2023-04-26) --------"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst:737-776",
+          "text": "---------- Requests provides access to almost the full range of HTTP verbs: GET, OPTIONS, "
+        }
+      ]
+    },
+    {
+      "id": "h-rq-03",
+      "question": "How are query string parameters added to the request URL?",
+      "style": "natural",
+      "hit": true,
+      "first_rank": 1,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/models.py",
+          "where": "src/requests/models.py:111-130",
+          "text": "@property def path_url(self) -> str: \"\"\"Build the path URL to use.\"\"\" url: list[str] = [] "
+        },
+        {
+          "repo": "psf/requests",
+          "path": "tests/test_requests.py",
+          "where": "tests/test_requests.py:1068-1071",
+          "text": "def test_urlencoded_get_query_multivalued_param(self, httpbin): r = requests.get(httpbin(\""
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/models.py",
+          "where": "src/requests/models.py:537-563",
+          "text": "netloc = auth or \"\" if netloc: netloc += \"@\" netloc += host if port: netloc += f\":{port}\" "
+        },
+        {
+          "repo": "psf/requests",
+          "path": "HISTORY.md",
+          "where": "HISTORY.md:801-880",
+          "text": "2.12.5 (2017-01-18) ------------------- **Bugfixes** - Fixed an issue with JSON encoding d"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "HISTORY.md",
+          "where": "HISTORY.md:1841-1920",
+          "text": "- Prefetch bugfix. - Added license to installed version. 0.8.3 (2011-11-27) --------------"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst:33-72",
+          "text": "Now, we have a :class:`Response <requests.Response>` object called ``r``. We can get all t"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst:65-104",
+          "text": ">>> payload = {'key1': 'value1', 'key2': 'value2'} >>> r = requests.get('https://httpbin.o"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/api.py",
+          "where": "src/requests/api.py:74-87",
+          "text": "def get( url: _t.UriType, params: _t.ParamsType = None, **kwargs: Unpack[_t.GetKwargs] ) -"
+        }
+      ]
+    },
+    {
+      "id": "h-rq-04",
+      "question": "How does requests read login credentials from a .netrc file?",
+      "style": "natural",
+      "hit": true,
+      "first_rank": 2,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/authentication.rst",
+          "where": "docs/user/authentication.rst:33-72",
+          "text": "``HTTPBasicAuth`` example above. netrc Authentication ~~~~~~~~~~~~~~~~~~~~ If no authentic"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/utils.py",
+          "where": "src/requests/utils.py:256-280",
+          "text": "# Abort early if there isn't one. if netrc_path is None: return ri = urlparse(url) host = "
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/utils.py",
+          "where": "src/requests/utils.py:231-255",
+          "text": "def get_netrc_auth( url: _t.UriType, raise_errors: bool = False ) -> tuple[str, str] | Non"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "tests/test_utils.py",
+          "where": "tests/test_utils.py:156-181",
+          "text": "class TestGetNetrcAuth: def test_works(self, tmp_path, monkeypatch): netrc_path = tmp_path"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "tests/test_requests.py",
+          "where": "tests/test_requests.py:718-746",
+          "text": "def test_basicauth_with_netrc_leak(self, httpbin): url1 = httpbin(\"basic-auth\", \"user\", \"p"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "src/requests/sessions.py",
+          "where": "src/requests/sessions.py:309-332",
+          "text": "def rebuild_auth( self, prepared_request: PreparedRequest, response: Response ) -> None: \""
+        },
+        {
+          "repo": "psf/requests",
+          "path": "tests/test_requests.py",
+          "where": "tests/test_requests.py:683-716",
+          "text": "def test_basicauth_with_netrc(self, httpbin): auth = (\"user\", \"pass\") wrong_auth = (\"wrong"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/quickstart.rst",
+          "where": "docs/user/quickstart.rst:193-232",
+          "text": "may better fit your use cases. .. note:: An important note about using ``Response.iter_con"
+        }
+      ]
+    },
+    {
+      "id": "h-rq-05",
+      "question": "Where is the package version number stored?",
+      "style": "natural",
+      "hit": false,
+      "first_rank": null,
+      "file_recall": 0.0,
+      "retrieved": [
+        {
+          "repo": "psf/requests",
+          "path": "tests/test_help.py",
+          "where": "tests/test_help.py:11-13",
+          "text": "class VersionedPackage: def __init__(self, version): self.__version__ = version"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/community/release-process.rst",
+          "where": "docs/community/release-process.rst:1-40",
+          "text": "Release Process and Rules ========================= .. versionadded:: v2.6.2 Starting with"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/community/release-process.rst",
+          "where": "docs/community/release-process.rst:33-53",
+          "text": "Minor releases will be backwards compatible with releases that have the same major version"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "docs/user/advanced.rst",
+          "where": "docs/user/advanced.rst:257-296",
+          "text": "You can also specify a local cert to use as client side certificate, as a single file (con"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "HISTORY.md",
+          "where": "HISTORY.md:561-640",
+          "text": "**Improvements** - Error messages for invalid headers now include the header name for easi"
+        },
+        {
+          "repo": "psf/requests",
+          "path": ".github/SECURITY.md",
+          "where": ".github/SECURITY.md:31-84",
+          "text": "### Timeline When you report an issue, one of the project members will respond to you with"
+        },
+        {
+          "repo": "psf/requests",
+          "path": ".github/dependabot.yml",
+          "where": ".github/dependabot.yml:1-30",
+          "text": "version: 2 updates: - package-ecosystem: \"github-actions\" directory: \"/\" schedule: interva"
+        },
+        {
+          "repo": "psf/requests",
+          "path": "tests/test_help.py",
+          "where": "tests/test_help.py:16-21",
+          "text": "def test_idna_without_version_attribute(): \"\"\"Older versions of IDNA don't provide a __ver"
+        }
+      ]
+    },
+    {
+      "id": "h-gm-01",
+      "question": "How does the markdown splitter decide where a new section starts?",
+      "style": "natural",
+      "hit": true,
+      "first_rank": 1,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/markdown.py",
+          "where": "src/gitmind/indexing/chunkers/markdown.py:3-29",
+          "text": "def chunk_markdown(text:str,path:str): lines=text.splitlines() current_section=[] chunks=["
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/__init__.py",
+          "where": "src/gitmind/indexing/chunkers/__init__.py:6-13",
+          "text": "def chunk_file(text:str,path:str): extension = Path(path).suffix.lower() if extension==\".p"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/models.py",
+          "where": "src/gitmind/indexing/chunkers/models.py:3-7",
+          "text": "@dataclass class Chunk: text:str path:str chunk_type:str"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/generic.py",
+          "where": "src/gitmind/indexing/chunkers/generic.py:9-25",
+          "text": "def chunk_generic(text: str, path: str): chunks = [] for start in range(0, len(text), Chun"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py:76-109",
+          "text": "for rank, point in enumerate(results, start=1): payload = point.payload or {} print( f\"{ra"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py:14-40",
+          "text": "def reciprocal_rank_fusion(dense_results, sparse_results, k=60): scores = {} points = {} f"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/reranker.py",
+          "where": "src/gitmind/retrieval/reranker.py:7-42",
+          "text": "def rerank(query: str, results: list, top_k: int = 5): if not results: return [] pairs = ["
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/python_ast.py",
+          "where": "src/gitmind/indexing/chunkers/python_ast.py:4-26",
+          "text": "def chunk_python_ast(text:str,path:str): tree=ast.parse(text) chunks=[] module_lines = [] "
+        }
+      ]
+    },
+    {
+      "id": "h-gm-02",
+      "question": "How is the unique ID of each stored chunk generated?",
+      "style": "natural",
+      "hit": true,
+      "first_rank": 4,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/generic.py",
+          "where": "src/gitmind/indexing/chunkers/generic.py:9-25",
+          "text": "def chunk_generic(text: str, path: str): chunks = [] for start in range(0, len(text), Chun"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/generic.py",
+          "where": "src/gitmind/indexing/chunkers/generic.py:1-6",
+          "text": "from gitmind.indexing.chunkers.models import Chunk from gitmind.indexing.chunkers.models i"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/models.py",
+          "where": "src/gitmind/indexing/chunkers/models.py:3-7",
+          "text": "@dataclass class Chunk: text:str path:str chunk_type:str"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py:70-90",
+          "text": "): point = PointStruct( id=str(uuid4()), vector={ \"dense\": dense_vector, \"sparse\": SparseV"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py:111-122",
+          "text": "@dataclass class FusedResult: point: object score: float @property def id(self): return se"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py:14-40",
+          "text": "def reciprocal_rank_fusion(dense_results, sparse_results, k=60): scores = {} points = {} f"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/pipeline.py",
+          "where": "src/gitmind/indexing/pipeline.py:30-51",
+          "text": "if content is None: continue indexed_files += 1 chunks = chunk_file(content, file[\"path\"])"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py:49-69",
+          "text": "def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]: if not chunks: "
+        }
+      ]
+    },
+    {
+      "id": "h-gm-03",
+      "question": "How is the context text for the language model built from the retrieved chunks?",
+      "style": "natural",
+      "hit": false,
+      "first_rank": null,
+      "file_recall": 0.0,
+      "retrieved": [
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py:49-69",
+          "text": "def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]: if not chunks: "
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/models.py",
+          "where": "src/gitmind/indexing/chunkers/models.py:3-7",
+          "text": "@dataclass class Chunk: text:str path:str chunk_type:str"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/generic.py",
+          "where": "src/gitmind/indexing/chunkers/generic.py:9-25",
+          "text": "def chunk_generic(text: str, path: str): chunks = [] for start in range(0, len(text), Chun"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py:70-90",
+          "text": "): point = PointStruct( id=str(uuid4()), vector={ \"dense\": dense_vector, \"sparse\": SparseV"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/reranker.py",
+          "where": "src/gitmind/retrieval/reranker.py:7-42",
+          "text": "def rerank(query: str, results: list, top_k: int = 5): if not results: return [] pairs = ["
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py:1-27",
+          "text": "from uuid import uuid4 from fastembed import SparseTextEmbedding from qdrant_client import"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/markdown.py",
+          "where": "src/gitmind/indexing/chunkers/markdown.py:3-29",
+          "text": "def chunk_markdown(text:str,path:str): lines=text.splitlines() current_section=[] chunks=["
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/python_ast.py",
+          "where": "src/gitmind/indexing/chunkers/python_ast.py:4-26",
+          "text": "def chunk_python_ast(text:str,path:str): tree=ast.parse(text) chunks=[] module_lines = [] "
+        }
+      ]
+    },
+    {
+      "id": "h-gm-04",
+      "question": "What happens when downloading a file from GitHub times out?",
+      "style": "natural",
+      "hit": true,
+      "first_rank": 1,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/github_client.py",
+          "where": "src/gitmind/indexing/github_client.py:51-81",
+          "text": "def fetch_file(owner: str, repo: str, path: str): api_url = ( f\"https://api.github.com/rep"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/github_client.py",
+          "where": "src/gitmind/indexing/github_client.py:33-48",
+          "text": "def list_repo_files(owner:str,repo:str,default_branch:str): api_url=f\"https://api.github.c"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/github_client.py",
+          "where": "src/gitmind/indexing/github_client.py:20-31",
+          "text": "def get_repo_info(owner:str,repo:str): api_url=f\"https://api.github.com/repos/{owner}/{rep"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/github_client.py",
+          "where": "src/gitmind/indexing/github_client.py:8-18",
+          "text": "def parse_repo_url(url:str): parsed=urlparse(url) if parsed.netloc!=\"github.com\": raise Va"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/llm/prompts.py",
+          "where": "src/gitmind/llm/prompts.py:1-10",
+          "text": "SYSTEM_PROMPT = \"\"\" You are GitMind, an AI assistant that answers questions about GitHub r"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/pipeline.py",
+          "where": "src/gitmind/indexing/pipeline.py:8-29",
+          "text": "def index_repository(repo_url: str): owner, repo = parse_repo_url(repo_url) repo_info = ge"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/pipeline.py",
+          "where": "src/gitmind/indexing/pipeline.py:30-51",
+          "text": "if content is None: continue indexed_files += 1 chunks = chunk_file(content, file[\"path\"])"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py:49-69",
+          "text": "def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]: if not chunks: "
+        }
+      ]
+    },
+    {
+      "id": "h-gm-05",
+      "question": "What does the embedding function do when it gets an empty list of texts?",
+      "style": "natural",
+      "hit": true,
+      "first_rank": 1,
+      "file_recall": 1.0,
+      "retrieved": [
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py:7-8",
+          "text": "def embed_text(text: str) -> list[float]: return model.encode(text).tolist()"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/embedder.py",
+          "where": "src/gitmind/indexing/embedder.py:11-22",
+          "text": "def embed_texts(texts: list[str]) -> list[list[float]]: if not texts: return [] embeddings"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py:49-69",
+          "text": "def build_points(chunks: list[Chunk], repo_url: str) -> list[PointStruct]: if not chunks: "
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/router.py",
+          "where": "src/gitmind/retrieval/router.py:76-109",
+          "text": "for rank, point in enumerate(results, start=1): payload = point.payload or {} print( f\"{ra"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/reranker.py",
+          "where": "src/gitmind/retrieval/reranker.py:7-42",
+          "text": "def rerank(query: str, results: list, top_k: int = 5): if not results: return [] pairs = ["
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/retrieval/qdrant_store.py",
+          "where": "src/gitmind/retrieval/qdrant_store.py:70-90",
+          "text": "): point = PointStruct( id=str(uuid4()), vector={ \"dense\": dense_vector, \"sparse\": SparseV"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/indexing/chunkers/generic.py",
+          "where": "src/gitmind/indexing/chunkers/generic.py:9-25",
+          "text": "def chunk_generic(text: str, path: str): chunks = [] for start in range(0, len(text), Chun"
+        },
+        {
+          "repo": "tanay330/gitmind",
+          "path": "src/gitmind/llm/client.py",
+          "where": "src/gitmind/llm/client.py:34-37",
+          "text": "def ask_gitmind(question: str) -> str: results = search(question, top_k=8) context=\"\\n\\n\"."
+        }
+      ]
+    }
+  ]
+}

@@ -119,3 +119,91 @@
   expected_files:
     - src/requests/adapters.py
   style: natural    
+
+- id: rq-06
+  repo: https://github.com/psf/requests
+  question: "How does requests verify SSL certificates?"
+  expected_files:
+    - src/requests/adapters.py
+    - src/requests/certs.py
+  style: natural
+
+- id: rq-07
+  repo: https://github.com/psf/requests
+  question: "How are HTTP status codes mapped to names?"
+  expected_files:
+    - src/requests/status_codes.py
+  style: natural
+
+- id: rq-08
+  repo: https://github.com/psf/requests
+  question: "How do request hooks work?"
+  expected_files:
+    - src/requests/hooks.py
+  style: natural
+
+- id: rq-09
+  repo: https://github.com/psf/requests
+  question: "Where is the case-insensitive dictionary implemented?"
+  expected_files:
+    - src/requests/structures.py
+  style: natural
+
+- id: rq-10
+  repo: https://github.com/psf/requests
+  question: "How does requests handle proxies?"
+  expected_files:
+    - src/requests/utils.py
+    - src/requests/adapters.py
+    - src/requests/sessions.py
+  style: natural
+
+- id: rq-11
+  repo: https://github.com/psf/requests
+  question: "How is JSON decoded from a response?"
+  expected_files:
+    - src/requests/models.py
+  style: natural
+
+- id: rq-12
+  repo: https://github.com/psf/requests
+  question: "How are files encoded for multipart uploads?"
+  expected_files:
+    - src/requests/models.py
+  style: natural
+
+- id: rq-13
+  repo: https://github.com/psf/requests
+  question: "How does the top-level requests.get function work?"
+  expected_files:
+    - src/requests/api.py
+  style: natural
+
+- id: rq-14
+  repo: https://github.com/psf/requests
+  question: "How is the default User-Agent header built?"
+  expected_files:
+    - src/requests/utils.py
+  style: natural
+
+- id: gm-13
+  repo: https://github.com/tanay330/gitmind
+  question: "Which function turns text into vectors?"
+  expected_files:
+    - src/gitmind/indexing/embedder.py
+  style: natural
+
+- id: gm-14
+  repo: https://github.com/tanay330/gitmind
+  question: "What instructions are given to the language model?"
+  expected_files:
+    - src/gitmind/llm/prompts.py
+  style: natural
+
+- id: gm-15
+  repo: https://github.com/tanay330/gitmind
+  question: "How are chunks from the same repository deleted before indexing again?"
+  expected_files:
+    - src/gitmind/retrieval/qdrant_store.py
+    - src/gitmind/indexing/pipeline.py
+  style: natural

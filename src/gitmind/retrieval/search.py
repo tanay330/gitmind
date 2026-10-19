@@ -49,7 +49,7 @@ def search(
     repo_id: str,
     top_k: int = 8,
     use_rerank: bool = False,
-    guarantee: int = 0,
+    guarantee: int = 2,
 ):
     query = strip_repo_name(question, repo_id)
     pool = RERANK_CANDIDATES if use_rerank else CANDIDATES
