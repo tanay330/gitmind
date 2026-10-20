@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     qdrant_url: str = "http://localhost:6333"
     groq_api_key: str
     qdrant_api_key: str | None = None
+    database_url: str = "sqlite:///gitmind.db"
 
     model_config = SettingsConfigDict(env_file=".env")
 
