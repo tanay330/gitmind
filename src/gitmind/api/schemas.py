@@ -21,3 +21,27 @@ class JobStatus(BaseModel):
     chunks_stored: int | None = None
     created_at: datetime
     finished_at: datetime | None = None
+
+
+class ChatRequest(BaseModel):
+    question: str = Field(min_length=3, max_length=500)
+
+
+class SourceItem(BaseModel):
+    number: int
+    path: str
+    lines: str
+    symbol: str
+    url: str
+
+
+class ChatResponse(BaseModel):
+    repo_id: str
+    question: str
+    answer: str
+    sources: list[SourceItem]
+
+
+class RepoItem(BaseModel):
+    repo_id: str
+    chunks: int    

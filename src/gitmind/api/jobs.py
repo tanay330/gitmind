@@ -45,3 +45,10 @@ def get_job(job_id: str) -> dict | None:
     with _lock:
         job = _jobs.get(job_id)
         return dict(job) if job else None
+
+def is_indexing(repo_id: str) -> bool:
+    with _lock:
+        return any(
+            job["repo_id"] == repo_id and job["status"] in ACTIVE
+            for job in _jobs.values()
+        )    

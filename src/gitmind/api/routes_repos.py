@@ -1,12 +1,14 @@
 import logging
 
-from fastapi import APIRouter, BackgroundTasks, HTTPException
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Request
 
 from gitmind.api.jobs import finish_job, get_job, start_job, update_job
-from gitmind.api.schemas import IndexRequest, JobStatus
+from gitmind.api.rate_limit import INDEX_LIMIT, limiter
+from gitmind.api.schemas import IndexRequest, JobStatus, RepoItem
 from gitmind.indexing.github_client import GitHubError, parse_repo_url
 from gitmind.indexing.pipeline import index_repository
 from gitmind.models import make_repo_id
+from gitmind.retrieval.store import list_repos
 
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["repos"])
@@ -31,15 +33,18 @@ def run_indexing(job_id: str, url: str) -> None:
 
 
 @router.post("/repos", response_model=JobStatus, status_code=202)
-def start_indexing(request: IndexRequest, background_tasks: BackgroundTasks):
+@limiter.limit(INDEX_LIMIT)
+def start_indexing(
+    payload: IndexRequest, request: Request, background_tasks: BackgroundTasks
+):
     try:
-        owner, repo = parse_repo_url(request.url)
+        owner, repo = parse_repo_url(payload.url)
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error))
 
     job, created = start_job(make_repo_id(owner, repo))
     if created:
-        background_tasks.add_task(run_indexing, job["job_id"], request.url)
+        background_tasks.add_task(run_indexing, job["job_id"], payload.url)
     return job
 
 
@@ -49,3 +54,8 @@ def read_job(job_id: str):
     if job is None:
         raise HTTPException(status_code=404, detail="Job not found")
     return job
+
+
+@router.get("/repos", response_model=list[RepoItem])
+def read_repos():
+    return list_repos()

@@ -131,3 +131,33 @@ def delete_repo(repo_id: str) -> None:
         collection_name=COLLECTION,
         points_selector=_repo_filter(repo_id),
     )
+
+def list_repos() -> list[dict]:
+    if not client.collection_exists(COLLECTION):
+        return []
+
+    counts: dict[str, int] = {}
+    try:
+        response = client.facet(
+            collection_name=COLLECTION, key="repo_id", limit=1000, exact=True
+        )
+        for hit in response.hits:
+            counts[hit.value] = hit.count
+    except Exception:
+        # Older Qdrant versions have no facet API: count by scrolling instead.
+        offset = None
+        while True:
+            points, offset = client.scroll(
+                collection_name=COLLECTION,
+                limit=1000,
+                offset=offset,
+                with_payload=["repo_id"],
+                with_vectors=False,
+            )
+            for point in points:
+                repo_id = point.payload["repo_id"]
+                counts[repo_id] = counts.get(repo_id, 0) + 1
+            if offset is None:
+                break
+
+    return [{"repo_id": name, "chunks": number} for name, number in sorted(counts.items())]    
