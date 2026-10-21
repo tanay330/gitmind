@@ -157,3 +157,9 @@ def test_chat_is_rate_limited(client, monkeypatch):
 
     assert codes[:20] == [200] * 20
     assert codes[20] == 429
+
+def test_home_page_is_served(client):
+    response = client.get("/")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    assert "GitMind" in response.text    

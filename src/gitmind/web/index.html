@@ -1,0 +1,943 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>GitMind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafbfc;
+    --rail: #eff2f6;
+    --ink: #18212d;
+    --muted: #5b6a7d;
+    --rule: #d9e0e8;
+    --link: #2446c8;
+    --mark: #fff0b3;
+    --mark-ink: #5a4500;
+    --mark-edge: #e6c64a;
+    --code: #eaeef4;
+    --ok: #1b7a4b;
+    --danger: #b3261e;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+    color-scheme: light dark;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e141c;
+      --rail: #0a0f15;
+      --ink: #e4e9f0;
+      --muted: #93a3b8;
+      --rule: #222e3c;
+      --link: #8fb0ff;
+      --mark: #3a3110;
+      --mark-ink: #f4d95c;
+      --mark-edge: #8a7424;
+      --code: #151e2a;
+      --ok: #6fd3a0;
+      --danger: #ff8a80;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 400 1rem/1.6 var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button, input, textarea { font: inherit; color: inherit; }
+  a { color: var(--link); }
+
+  :focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* ---------- layout ---------- */
+
+  .app {
+    display: grid;
+    grid-template-columns: 19.5rem minmax(0, 1fr);
+    min-height: 100vh;
+  }
+
+  .rail {
+    background: var(--rail);
+    border-right: 1px solid var(--rule);
+    padding: 1.75rem 1.25rem 2rem;
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    min-width: 0;
+  }
+
+  /* ---------- rail ---------- */
+
+  .brand {
+    margin: 0;
+    padding-left: 0.7rem;
+    border-left: 4px solid var(--mark-edge);
+    font: 600 1.4rem/1.15 var(--sans);
+    letter-spacing: -0.01em;
+  }
+
+  .tag {
+    margin: 0.6rem 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+
+  .index { margin-top: 1.75rem; }
+
+  .index label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .index input {
+    width: 100%;
+    padding: 0.55rem 0.65rem;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+
+  .index input::placeholder { color: var(--muted); }
+
+  .btn {
+    margin-top: 0.6rem;
+    padding: 0.55rem 1rem;
+    background: var(--ink);
+    color: var(--bg);
+    border: 0;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  .job {
+    display: grid;
+    gap: 0.15rem;
+    margin-top: 0.9rem;
+    padding: 0.6rem 0.75rem;
+    background: var(--bg);
+    border-left: 3px solid var(--mark-edge);
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .job[hidden] { display: none; }
+  .job[data-status="ready"] { border-left-color: var(--ok); }
+  .job[data-status="failed"] { border-left-color: var(--danger); }
+  .job strong { font: 500 0.85rem var(--mono); word-break: break-all; }
+
+  .rail-title {
+    margin: 2rem 0 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .repo-list { list-style: none; margin: 0; padding: 0; }
+
+  .repo {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.7rem;
+    background: none;
+    border: 0;
+    border-left: 3px solid transparent;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .repo:hover { background: var(--bg); }
+
+  .repo.is-active {
+    background: var(--bg);
+    border-left-color: var(--mark-edge);
+  }
+
+  .repo-name {
+    display: block;
+    font: 500 0.875rem var(--mono);
+    word-break: break-all;
+  }
+
+  .repo-count {
+    display: block;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  .rail .muted { color: var(--muted); font-size: 0.875rem; margin: 0; }
+
+  /* ---------- main column ---------- */
+
+  .main-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 1.5rem;
+    padding: 1rem clamp(1rem, 4vw, 3rem);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .active-name { font: 600 1rem var(--mono); word-break: break-all; }
+  .active-meta { display: flex; gap: 1.25rem; color: var(--muted); font-size: 0.875rem; }
+
+  .thread {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.75rem clamp(1rem, 4vw, 3rem) 2rem;
+  }
+
+  .turn { max-width: 42rem; }
+
+  .turn + .turn {
+    margin-top: 2rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .question {
+    margin: 0 0 0.8rem;
+    font: 600 1.2rem/1.35 var(--sans);
+    letter-spacing: -0.005em;
+  }
+
+  .answer p { margin: 0 0 0.8rem; }
+  .answer h4 { margin: 1.1rem 0 0.4rem; font-size: 1rem; }
+  .answer ul, .answer ol { margin: 0 0 0.8rem; padding-left: 1.3rem; }
+  .answer li { margin-bottom: 0.3rem; }
+
+  .answer code {
+    padding: 0.1em 0.3em;
+    background: var(--code);
+    border-radius: 3px;
+    font: 400 0.875em var(--mono);
+    overflow-wrap: anywhere;
+  }
+
+  .answer pre {
+    margin: 0 0 0.9rem;
+    padding: 0.8rem 0.9rem;
+    background: var(--code);
+    border-radius: 4px;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .answer pre code { padding: 0; background: none; font-size: inherit; overflow-wrap: normal; }
+
+  .working { color: var(--muted); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .working { animation: pulse 1.4s ease-in-out infinite; }
+    @keyframes pulse { 50% { opacity: 0.45; } }
+  }
+
+  .error {
+    padding: 0.55rem 0.75rem;
+    border-left: 3px solid var(--danger);
+    background: var(--rail);
+  }
+
+  /* ---------- citations and sources ---------- */
+
+  .cite {
+    display: inline-block;
+    min-width: 1.4em;
+    margin: 0 0.1em;
+    padding: 0 0.3em;
+    background: var(--mark);
+    color: var(--mark-ink);
+    border: 1px solid var(--mark-edge);
+    border-radius: 3px;
+    font: 500 0.75em/1.5 var(--mono);
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .cite:hover { border-color: var(--mark-ink); }
+
+  .sources { margin-top: 1.25rem; }
+
+  .sources h3, .more summary {
+    margin: 0 0 0.35rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .more { margin-top: 0.9rem; }
+  .more summary { cursor: pointer; }
+
+  .src {
+    display: grid;
+    grid-template-columns: 1.6rem minmax(0, 1fr) auto;
+    grid-template-areas: "n path lines" ". sym sym";
+    gap: 0 0.6rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid var(--rule);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .src:hover .src-file { text-decoration: underline; }
+
+  .src-n {
+    grid-area: n;
+    color: var(--mark-ink);
+    font: 500 0.8rem/1.6 var(--mono);
+  }
+
+  .src-path {
+    grid-area: path;
+    font: 400 0.85rem/1.6 var(--mono);
+    overflow-wrap: anywhere;
+  }
+
+  .src-dir { color: var(--muted); }
+  .src-file { font-weight: 500; }
+
+  .src-lines {
+    grid-area: lines;
+    align-self: start;
+    padding: 0 0.4rem;
+    background: var(--mark);
+    color: var(--mark-ink);
+    border: 1px solid var(--mark-edge);
+    border-radius: 3px;
+    font: 500 0.78rem/1.55 var(--mono);
+    white-space: nowrap;
+  }
+
+  .src-sym {
+    grid-area: sym;
+    color: var(--muted);
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+  }
+
+  .copy {
+    margin-top: 0.9rem;
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  /* ---------- empty state ---------- */
+
+  .empty { max-width: 42rem; }
+  .empty h2 { margin: 0 0 0.4rem; font: 600 1.3rem/1.3 var(--sans); }
+  .empty p { margin: 0 0 1.25rem; color: var(--muted); }
+
+  .example {
+    display: block;
+    width: 100%;
+    padding: 0.65rem 0;
+    background: none;
+    border: 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--link);
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .example:first-child { border-top: 1px solid var(--rule); }
+
+  /* ---------- composer ---------- */
+
+  .composer {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-end;
+    padding: 0.9rem clamp(1rem, 4vw, 3rem) 1.1rem;
+    background: var(--bg);
+    border-top: 1px solid var(--rule);
+  }
+
+  .composer textarea {
+    flex: 1;
+    max-width: 42rem;
+    padding: 0.6rem 0.7rem;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    resize: none;
+    line-height: 1.5;
+  }
+
+  .composer textarea:disabled { opacity: 0.55; }
+  .composer .btn { margin: 0; }
+
+  .hint {
+    margin: 0;
+    padding: 0 clamp(1rem, 4vw, 3rem) 0.6rem;
+    color: var(--danger);
+    font-size: 0.85rem;
+  }
+
+  .hint[hidden] { display: none; }
+
+  /* ---------- small screens ---------- */
+
+  @media (max-width: 860px) {
+    .app { grid-template-columns: 1fr; }
+    .rail { border-right: 0; border-bottom: 1px solid var(--rule); }
+    .main { height: auto; position: static; min-height: 70vh; }
+    .thread { overflow: visible; }
+    .composer { position: sticky; bottom: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="rail">
+    <h1 class="brand">GitMind</h1>
+    <p class="tag">Ask questions about any public GitHub repository.</p>
+
+    <form id="index-form" class="index">
+      <label for="repo-url">Repository URL</label>
+      <input id="repo-url" type="url" placeholder="https://github.com/owner/repo" autocomplete="off" required>
+      <button id="index-btn" class="btn" type="submit">Index repository</button>
+    </form>
+
+    <div id="job" class="job" role="status" aria-live="polite" hidden></div>
+
+    <h2 class="rail-title">Indexed repositories</h2>
+    <ul id="repo-list" class="repo-list"></ul>
+    <p id="repo-empty" class="muted" hidden>Nothing is indexed yet. Add a repository above.</p>
+  </aside>
+
+  <main class="main">
+    <header class="main-head">
+      <div id="active-name" class="active-name">No repository selected</div>
+      <div id="active-meta" class="active-meta"></div>
+    </header>
+
+    <div id="thread" class="thread"></div>
+
+    <p id="hint" class="hint" role="alert" hidden></p>
+    <form id="ask-form" class="composer">
+      <label class="sr-only" for="question">Your question</label>
+      <textarea id="question" rows="2" maxlength="500" placeholder="Ask how something works. Enter sends, Shift+Enter adds a line."></textarea>
+      <button id="ask-btn" class="btn" type="submit">Ask</button>
+    </form>
+  </main>
+</div>
+
+<noscript>GitMind needs JavaScript to run.</noscript>
+
+<script>
+(() => {
+  "use strict";
+
+  const $ = (id) => document.getElementById(id);
+  const els = {
+    form: $("index-form"),
+    url: $("repo-url"),
+    indexBtn: $("index-btn"),
+    job: $("job"),
+    repoList: $("repo-list"),
+    repoEmpty: $("repo-empty"),
+    activeName: $("active-name"),
+    activeMeta: $("active-meta"),
+    thread: $("thread"),
+    hint: $("hint"),
+    askForm: $("ask-form"),
+    question: $("question"),
+    askBtn: $("ask-btn"),
+  };
+
+  const STORE_REPO = "gitmind.activeRepo";
+  const STORE_JOB = "gitmind.job";
+  const POLL_MS = 2000;
+  const EXAMPLES = [
+    "What does this project do?",
+    "How is the code organized?",
+    "Which libraries or models does it use?",
+    "How are errors handled?",
+  ];
+
+  const state = { repos: [], active: null, conversations: {}, pending: false };
+  let pollTimer = null;
+
+  const store = {
+    get(key) {
+      try { return localStorage.getItem(key); } catch { return null; }
+    },
+    set(key, value) {
+      try { localStorage.setItem(key, value); } catch { /* storage unavailable */ }
+    },
+    remove(key) {
+      try { localStorage.removeItem(key); } catch { /* storage unavailable */ }
+    },
+  };
+
+  /* ---------- safe text helpers ---------- */
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, (c) => (
+      { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+    ));
+  }
+
+  function safeUrl(url) {
+    return typeof url === "string" && url.startsWith("https://github.com/") ? url : "#";
+  }
+
+  /* ---------- answer rendering (escape first, then add our own tags) ---------- */
+
+  function formatInline(raw, sources) {
+    return raw.split(/(`[^`\n]+`)/g).map((part, index) => {
+      if (index % 2 === 1) return `<code>${escapeHtml(part.slice(1, -1))}</code>`;
+
+      let html = escapeHtml(part);
+      html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+      html = html.replace(/\[(\d{1,2})\]/g, (match, num) => {
+        const source = sources.find((s) => s.number === Number(num));
+        if (!source) return match;
+        const title = `${source.path}:${source.lines}`;
+        return `<a class="cite" href="${escapeHtml(safeUrl(source.url))}" target="_blank" ` +
+               `rel="noopener noreferrer" title="${escapeHtml(title)}">${num}</a>`;
+      });
+      return html;
+    }).join("");
+  }
+
+  function renderTextBlock(text, sources) {
+    const html = [];
+    let paragraph = [];
+    let list = null;
+
+    const flushParagraph = () => {
+      if (paragraph.length) html.push(`<p>${paragraph.join("<br>")}</p>`);
+      paragraph = [];
+    };
+    const flushList = () => {
+      if (list) {
+        html.push(`<${list.tag}>${list.items.map((item) => `<li>${item}</li>`).join("")}</${list.tag}>`);
+      }
+      list = null;
+    };
+
+    for (const rawLine of text.split("\n")) {
+      const line = rawLine.trimEnd();
+
+      if (!line.trim()) {
+        flushParagraph();
+        continue;
+      }
+
+      const bullet = line.match(/^\s*[-*]\s+(.*)$/);
+      const numbered = line.match(/^\s*\d+[.)]\s+(.*)$/);
+      const heading = line.match(/^#{1,6}\s+(.*)$/);
+
+      if (bullet || numbered) {
+        flushParagraph();
+        const tag = bullet ? "ul" : "ol";
+        if (!list || list.tag !== tag) {
+          flushList();
+          list = { tag, items: [] };
+        }
+        list.items.push(formatInline((bullet || numbered)[1], sources));
+      } else if (list && /^\s{2,}\S/.test(line)) {
+        list.items[list.items.length - 1] += "<br>" + formatInline(line.trim(), sources);
+      } else if (heading) {
+        flushParagraph();
+        flushList();
+        html.push(`<h4>${formatInline(heading[1], sources)}</h4>`);
+      } else {
+        flushList();
+        paragraph.push(formatInline(line.trim(), sources));
+      }
+    }
+
+    flushParagraph();
+    flushList();
+    return html.join("");
+  }
+
+  function renderMarkdown(text, sources) {
+    return text.split(/(```[\s\S]*?```)/g).map((piece) => {
+      if (piece.startsWith("```")) {
+        const body = piece.replace(/^```[^\n]*\n?/, "").replace(/```$/, "").replace(/\n$/, "");
+        return `<pre><code>${escapeHtml(body)}</code></pre>`;
+      }
+      return renderTextBlock(piece, sources);
+    }).join("");
+  }
+
+  /* ---------- talking to the API ---------- */
+
+  class ApiError extends Error {
+    constructor(status, message) {
+      super(message);
+      this.status = status;
+    }
+  }
+
+  function errorText(status, data) {
+    if (status === 429) return "You've reached the request limit. Wait a moment and try again.";
+    const detail = data && (data.detail ?? data.error);
+    if (Array.isArray(detail)) return detail.map((d) => d.msg).join(". ");
+    if (typeof detail === "string") return detail;
+    return `The request failed (status ${status}).`;
+  }
+
+  async function api(path, options = {}) {
+    let response;
+    try {
+      response = await fetch(path, { headers: { "Content-Type": "application/json" }, ...options });
+    } catch {
+      throw new ApiError(0, "Can't reach the GitMind server. Check that it is running.");
+    }
+
+    let data = null;
+    try { data = await response.json(); } catch { /* the response had no JSON body */ }
+
+    if (!response.ok) throw new ApiError(response.status, errorText(response.status, data));
+    return data;
+  }
+
+  /* ---------- repositories ---------- */
+
+  async function loadRepos(preferred) {
+    try {
+      state.repos = await api("/repos");
+    } catch (error) {
+      state.repos = [];
+      showJob({ status: "failed", detail: error.message });
+    }
+
+    const ids = state.repos.map((repo) => repo.repo_id);
+    const wanted = preferred || state.active || store.get(STORE_REPO);
+    state.active = ids.includes(wanted) ? wanted : (ids[0] || null);
+
+    renderRepos();
+    renderMain();
+  }
+
+  function selectRepo(repoId) {
+    state.active = repoId;
+    store.set(STORE_REPO, repoId);
+    hideHint();
+    renderRepos();
+    renderMain();
+  }
+
+  function renderRepos() {
+    els.repoEmpty.hidden = state.repos.length > 0;
+    els.repoList.innerHTML = state.repos.map((repo) => {
+      const selected = repo.repo_id === state.active;
+      return `<li><button type="button" class="repo${selected ? " is-active" : ""}" ` +
+        `data-repo="${escapeHtml(repo.repo_id)}" aria-current="${selected}">` +
+        `<span class="repo-name">${escapeHtml(repo.repo_id)}</span>` +
+        `<span class="repo-count">${repo.chunks} chunks</span></button></li>`;
+    }).join("");
+  }
+
+  /* ---------- indexing jobs ---------- */
+
+  const JOB_TEXT = {
+    queued: "Waiting to start.",
+    indexing: "Reading files and building the search index. Large repositories take a few minutes.",
+  };
+
+  function showJob(job) {
+    els.job.hidden = false;
+    els.job.dataset.status = job.status;
+
+    let message = JOB_TEXT[job.status] || "";
+    if (job.status === "ready") message = `Ready. ${job.chunks_stored} chunks from ${job.files_indexed} files.`;
+    if (job.status === "failed") message = job.detail || "Indexing failed.";
+
+    els.job.innerHTML =
+      (job.repo_id ? `<strong>${escapeHtml(job.repo_id)}</strong>` : "") +
+      `<span>${escapeHtml(message)}</span>`;
+  }
+
+  async function startIndexing(url) {
+    clearTimeout(pollTimer);
+    els.indexBtn.disabled = true;
+    showJob({ status: "queued" });
+
+    try {
+      const job = await api("/repos", { method: "POST", body: JSON.stringify({ url }) });
+      store.set(STORE_JOB, job.job_id);
+      showJob(job);
+      watchJob(job.job_id);
+    } catch (error) {
+      showJob({ status: "failed", detail: error.message });
+      els.indexBtn.disabled = false;
+    }
+  }
+
+  async function watchJob(jobId) {
+    try {
+      const job = await api(`/jobs/${encodeURIComponent(jobId)}`);
+      showJob(job);
+
+      if (job.status === "ready") {
+        store.remove(STORE_JOB);
+        els.indexBtn.disabled = false;
+        els.url.value = "";
+        await loadRepos(job.repo_id);
+        return;
+      }
+      if (job.status === "failed") {
+        store.remove(STORE_JOB);
+        els.indexBtn.disabled = false;
+        return;
+      }
+    } catch (error) {
+      showJob({ status: "failed", detail: error.message });
+      els.indexBtn.disabled = false;
+      return;
+    }
+
+    pollTimer = setTimeout(() => watchJob(jobId), POLL_MS);
+  }
+
+  async function resumeJob() {
+    const jobId = store.get(STORE_JOB);
+    if (!jobId) return;
+    try {
+      const job = await api(`/jobs/${encodeURIComponent(jobId)}`);
+      if (job.status === "queued" || job.status === "indexing") {
+        els.indexBtn.disabled = true;
+        showJob(job);
+        watchJob(jobId);
+      } else {
+        store.remove(STORE_JOB);
+      }
+    } catch {
+      store.remove(STORE_JOB);
+    }
+  }
+
+  /* ---------- main column ---------- */
+
+  function renderMain() {
+    const repo = state.repos.find((r) => r.repo_id === state.active);
+
+    els.activeName.textContent = repo ? repo.repo_id : "No repository selected";
+    els.activeMeta.innerHTML = repo
+      ? `<span>${repo.chunks} chunks indexed</span>` +
+        `<a href="https://github.com/${escapeHtml(repo.repo_id)}" target="_blank" rel="noopener noreferrer">View on GitHub</a>`
+      : "";
+
+    els.question.disabled = !repo || state.pending;
+    els.askBtn.disabled = !repo || state.pending;
+    renderThread();
+  }
+
+  function renderThread() {
+    if (!state.active) {
+      els.thread.innerHTML =
+        `<div class="empty"><h2>Choose a repository</h2>` +
+        `<p>Index a repository on the left, or pick one that is already indexed. ` +
+        `Then ask how its code works.</p></div>`;
+      return;
+    }
+
+    const turns = state.conversations[state.active] || [];
+    if (!turns.length) {
+      els.thread.innerHTML =
+        `<div class="empty"><h2>Ask about ${escapeHtml(state.active)}</h2>` +
+        `<p>Answers are written from the repository's code and cite the exact lines they use.</p>` +
+        `<div>${EXAMPLES.map((q) =>
+          `<button type="button" class="example" data-q="${escapeHtml(q)}">${escapeHtml(q)}</button>`
+        ).join("")}</div></div>`;
+      return;
+    }
+
+    els.thread.innerHTML = turns.map(renderTurn).join("");
+    const latest = els.thread.lastElementChild;
+    if (latest) latest.scrollIntoView({ block: "start" });
+  }
+
+  function sourceRow(source) {
+    const slash = source.path.lastIndexOf("/");
+    const dir = slash >= 0 ? source.path.slice(0, slash + 1) : "";
+    const file = slash >= 0 ? source.path.slice(slash + 1) : source.path;
+
+    return `<a class="src" href="${escapeHtml(safeUrl(source.url))}" target="_blank" rel="noopener noreferrer">` +
+      `<span class="src-n">${source.number}</span>` +
+      `<span class="src-path"><span class="src-dir">${escapeHtml(dir)}</span>` +
+      `<span class="src-file">${escapeHtml(file)}</span></span>` +
+      `<span class="src-lines" title="Lines">${escapeHtml(String(source.lines).replace("-", "\u2013"))}</span>` +
+      `<span class="src-sym">${escapeHtml(source.symbol)}</span></a>`;
+  }
+
+  function renderSources(turn, index) {
+    const cited = new Set([...turn.text.matchAll(/\[(\d{1,2})\]/g)].map((m) => Number(m[1])));
+    const citedSources = turn.sources.filter((s) => cited.has(s.number));
+    const otherSources = turn.sources.filter((s) => !cited.has(s.number));
+
+    let html = "";
+    if (citedSources.length) {
+      html += `<div class="sources"><h3>Sources cited</h3>${citedSources.map(sourceRow).join("")}</div>`;
+    }
+    if (otherSources.length) {
+      const label = citedSources.length ? "Other chunks the search retrieved" : "Chunks the search retrieved";
+      html += `<details class="more"><summary>${label} (${otherSources.length})</summary>` +
+        `${otherSources.map(sourceRow).join("")}</details>`;
+    }
+    html += `<button type="button" class="copy" data-copy="${index}">Copy answer</button>`;
+    return html;
+  }
+
+  function renderTurn(turn, index) {
+    let body;
+    if (turn.pending) {
+      body = `<p class="working" role="status">Searching the code and writing an answer</p>`;
+    } else if (turn.error) {
+      body = `<p class="error">${escapeHtml(turn.error)}</p>`;
+    } else {
+      body = renderMarkdown(turn.text, turn.sources) + renderSources(turn, index);
+    }
+    return `<article class="turn"><h2 class="question">${escapeHtml(turn.question)}</h2>` +
+      `<div class="answer">${body}</div></article>`;
+  }
+
+  /* ---------- asking questions ---------- */
+
+  function showHint(message) {
+    els.hint.textContent = message;
+    els.hint.hidden = false;
+  }
+
+  function hideHint() {
+    els.hint.hidden = true;
+  }
+
+  async function ask(rawQuestion) {
+    const repo = state.active;
+    const question = rawQuestion.trim();
+    if (!repo || state.pending) return;
+
+    if (question.length < 3) {
+      showHint("Write a question with at least 3 characters.");
+      return;
+    }
+    hideHint();
+
+    if (!state.conversations[repo]) state.conversations[repo] = [];
+    const turn = { question, pending: true, error: null, text: "", sources: [] };
+    state.conversations[repo].push(turn);
+
+    state.pending = true;
+    els.question.value = "";
+    renderMain();
+
+    try {
+      const [owner, name] = repo.split("/");
+      const data = await api(
+        `/repos/${encodeURIComponent(owner)}/${encodeURIComponent(name)}/chat`,
+        { method: "POST", body: JSON.stringify({ question }) },
+      );
+      turn.text = data.answer;
+      turn.sources = data.sources;
+    } catch (error) {
+      turn.error = error.message;
+    } finally {
+      turn.pending = false;
+      state.pending = false;
+      renderMain();
+      els.question.focus();
+    }
+  }
+
+  async function copyAnswer(button) {
+    const turns = state.conversations[state.active] || [];
+    const turn = turns[Number(button.dataset.copy)];
+    if (!turn) return;
+
+    try {
+      await navigator.clipboard.writeText(turn.text);
+      button.textContent = "Copied";
+    } catch {
+      button.textContent = "Copy failed";
+    }
+    setTimeout(() => { button.textContent = "Copy answer"; }, 1500);
+  }
+
+  /* ---------- events ---------- */
+
+  els.form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const url = els.url.value.trim();
+    if (url) startIndexing(url);
+  });
+
+  els.repoList.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-repo]");
+    if (button) selectRepo(button.dataset.repo);
+  });
+
+  els.thread.addEventListener("click", (event) => {
+    const example = event.target.closest("[data-q]");
+    if (example) {
+      ask(example.dataset.q);
+      return;
+    }
+    const copy = event.target.closest("[data-copy]");
+    if (copy) copyAnswer(copy);
+  });
+
+  els.askForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    ask(els.question.value);
+  });
+
+  els.question.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey && !event.isComposing) {
+      event.preventDefault();
+      els.askForm.requestSubmit();
+    }
+  });
+
+  els.question.addEventListener("input", hideHint);
+
+  loadRepos().then(resumeJob);
+})();
+</script>
+</body>
+</html>
