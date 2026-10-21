@@ -361,6 +361,26 @@
     cursor: pointer;
   }
 
+  .link-btn {
+    margin-left: auto;
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--muted);
+    font-size: 0.875rem;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .link-btn[hidden] { display: none; }
+  .link-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .searched {
+    margin: -0.35rem 0 0.8rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
   /* ---------- empty state ---------- */
 
   .empty { max-width: 42rem; }
@@ -449,6 +469,7 @@
     <header class="main-head">
       <div id="active-name" class="active-name">No repository selected</div>
       <div id="active-meta" class="active-meta"></div>
+      <button id="clear-btn" class="link-btn" type="button" hidden>Clear conversation</button>
     </header>
 
     <div id="thread" class="thread"></div>
@@ -478,6 +499,7 @@
     repoEmpty: $("repo-empty"),
     activeName: $("active-name"),
     activeMeta: $("active-meta"),
+    clear: $("clear-btn"),
     thread: $("thread"),
     hint: $("hint"),
     askForm: $("ask-form"),
@@ -487,6 +509,9 @@
 
   const STORE_REPO = "gitmind.activeRepo";
   const STORE_JOB = "gitmind.job";
+  const STORE_CONVERSATIONS = "gitmind.conversations.v1";
+  const MAX_SAVED_TURNS = 20;
+  const HISTORY_TURNS = 3;
   const POLL_MS = 2000;
   const EXAMPLES = [
     "What does this project do?",
@@ -509,6 +534,57 @@
       try { localStorage.removeItem(key); } catch { /* storage unavailable */ }
     },
   };
+
+  /* ---------- saved conversations ---------- */
+
+  function sanitizeSource(source) {
+    const ok = source && typeof source.path === "string" && typeof source.symbol === "string" &&
+      typeof source.url === "string" && Number.isFinite(source.number) && source.lines !== undefined;
+    return ok
+      ? { number: source.number, path: source.path, lines: String(source.lines), symbol: source.symbol, url: source.url }
+      : null;
+  }
+
+  function sanitizeTurn(turn) {
+    if (!turn || typeof turn.question !== "string" || typeof turn.text !== "string") return null;
+    return {
+      question: turn.question,
+      text: turn.text,
+      sources: Array.isArray(turn.sources) ? turn.sources.map(sanitizeSource).filter(Boolean) : [],
+      searchQuery: typeof turn.searchQuery === "string" ? turn.searchQuery : null,
+      pending: false,
+      error: null,
+    };
+  }
+
+  function loadConversations() {
+    const result = {};
+    try {
+      const saved = JSON.parse(store.get(STORE_CONVERSATIONS) || "{}");
+      for (const [repo, turns] of Object.entries(saved || {})) {
+        if (!Array.isArray(turns)) continue;
+        const clean = turns.map(sanitizeTurn).filter(Boolean).slice(-MAX_SAVED_TURNS);
+        if (clean.length) result[repo] = clean;
+      }
+    } catch { /* ignore damaged data */ }
+    return result;
+  }
+
+  function saveConversations() {
+    const toSave = {};
+    for (const [repo, turns] of Object.entries(state.conversations)) {
+      const done = turns.filter((t) => !t.pending && !t.error).slice(-MAX_SAVED_TURNS);
+      if (done.length) toSave[repo] = done;
+    }
+    store.set(STORE_CONVERSATIONS, JSON.stringify(toSave));
+  }
+
+  function historyFor(repo, currentTurn) {
+    return (state.conversations[repo] || [])
+      .filter((t) => t !== currentTurn && !t.pending && !t.error)
+      .slice(-HISTORY_TURNS)
+      .map((t) => ({ question: t.question, answer: t.text.slice(0, 3000) }));
+  }
 
   /* ---------- safe text helpers ---------- */
 
@@ -765,6 +841,8 @@
 
     els.question.disabled = !repo || state.pending;
     els.askBtn.disabled = !repo || state.pending;
+    els.clear.hidden = !(state.conversations[state.active] || []).length;
+    els.clear.disabled = state.pending;
     renderThread();
   }
 
@@ -833,7 +911,9 @@
     } else {
       body = renderMarkdown(turn.text, turn.sources) + renderSources(turn, index);
     }
-    return `<article class="turn"><h2 class="question">${escapeHtml(turn.question)}</h2>` +
+    const rewritten = turn.searchQuery && turn.searchQuery.trim().toLowerCase() !== turn.question.trim().toLowerCase();
+    const searched = rewritten ? `<p class="searched">Searched for: ${escapeHtml(turn.searchQuery)}</p>` : "";
+    return `<article class="turn"><h2 class="question">${escapeHtml(turn.question)}</h2>${searched}` +
       `<div class="answer">${body}</div></article>`;
   }
 
@@ -860,7 +940,8 @@
     hideHint();
 
     if (!state.conversations[repo]) state.conversations[repo] = [];
-    const turn = { question, pending: true, error: null, text: "", sources: [] };
+    const turn = { question, pending: true, error: null, text: "", sources: [], searchQuery: null };
+    const history = historyFor(repo, turn);
     state.conversations[repo].push(turn);
 
     state.pending = true;
@@ -871,10 +952,13 @@
       const [owner, name] = repo.split("/");
       const data = await api(
         `/repos/${encodeURIComponent(owner)}/${encodeURIComponent(name)}/chat`,
-        { method: "POST", body: JSON.stringify({ question }) },
+        { method: "POST", body: JSON.stringify({ question, history }) },
       );
       turn.text = data.answer;
       turn.sources = data.sources;
+      turn.searchQuery = data.search_query || null;
+      turn.pending = false;
+      saveConversations();
     } catch (error) {
       turn.error = error.message;
     } finally {
@@ -936,6 +1020,14 @@
 
   els.question.addEventListener("input", hideHint);
 
+  els.clear.addEventListener("click", () => {
+    if (state.pending || !state.active) return;
+    delete state.conversations[state.active];
+    saveConversations();
+    renderMain();
+  });
+
+  state.conversations = loadConversations();
   loadRepos().then(resumeJob);
 })();
 </script>

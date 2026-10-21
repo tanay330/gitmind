@@ -39,9 +39,19 @@ class ChatResponse(BaseModel):
     repo_id: str
     question: str
     answer: str
+    search_query: str | None = None
     sources: list[SourceItem]
 
 
 class RepoItem(BaseModel):
     repo_id: str
     chunks: int    
+    
+class ChatTurn(BaseModel):
+    question: str = Field(max_length=500)
+    answer: str = Field(max_length=4000)
+
+
+class ChatRequest(BaseModel):
+    question: str = Field(min_length=3, max_length=500)
+    history: list[ChatTurn] = Field(default_factory=list, max_length=6)    

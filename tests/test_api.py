@@ -29,7 +29,7 @@ def client():
 
 
 def fake_indexed_repo(monkeypatch, calls=None):
-    def fake_answer(question, repo_id):
+    def fake_answer(question, repo_id, history=None):
         if calls is not None:
             calls.append(repo_id)
         return FAKE_ANSWER
@@ -40,6 +40,13 @@ def fake_indexed_repo(monkeypatch, calls=None):
 
 def test_health(client):
     assert client.get("/health").json() == {"status": "ok"}
+
+
+def test_home_page_is_served(client):
+    response = client.get("/")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    assert "GitMind" in response.text
 
 
 def test_index_rejects_a_bad_url(client):
@@ -136,7 +143,7 @@ def test_chat_rejects_a_too_short_question(client):
 def test_chat_hides_model_failures(client, monkeypatch):
     monkeypatch.setattr(routes_chat, "count_repo", lambda repo_id: 5)
 
-    def fail(question, repo_id):
+    def fail(question, repo_id, history=None):
         raise RuntimeError("groq is down")
 
     monkeypatch.setattr(routes_chat, "answer_question", fail)
@@ -145,6 +152,51 @@ def test_chat_hides_model_failures(client, monkeypatch):
 
     assert response.status_code == 502
     assert "groq" not in response.text
+
+
+def test_chat_passes_history_to_the_answer_step(client, monkeypatch):
+    seen = {}
+
+    def fake_answer(question, repo_id, history=None):
+        seen["history"] = history
+        return FAKE_ANSWER
+
+    monkeypatch.setattr(routes_chat, "count_repo", lambda repo_id: 5)
+    monkeypatch.setattr(routes_chat, "answer_question", fake_answer)
+
+    response = client.post(
+        "/repos/a/b/chat",
+        json={"question": "why?", "history": [{"question": "How?", "answer": "Like this [1]."}]},
+    )
+
+    assert response.status_code == 200
+    assert seen["history"] == [{"question": "How?", "answer": "Like this [1]."}]
+
+
+def test_chat_returns_the_search_query(client, monkeypatch):
+    monkeypatch.setattr(routes_chat, "count_repo", lambda repo_id: 5)
+    monkeypatch.setattr(
+        routes_chat,
+        "answer_question",
+        lambda question, repo_id, history=None: {**FAKE_ANSWER, "search_query": "a standalone question"},
+    )
+
+    response = client.post("/repos/a/b/chat", json={"question": "why?"})
+
+    assert response.json()["search_query"] == "a standalone question"
+
+
+@pytest.mark.parametrize(
+    "history",
+    [
+        [{"question": "q", "answer": "a"}] * 7,
+        [{"question": "q", "answer": "a" * 4001}],
+        [{"question": "q"}],
+    ],
+)
+def test_chat_rejects_bad_history(client, history):
+    response = client.post("/repos/a/b/chat", json={"question": "why?", "history": history})
+    assert response.status_code == 422
 
 
 def test_chat_is_rate_limited(client, monkeypatch):
@@ -157,9 +209,3 @@ def test_chat_is_rate_limited(client, monkeypatch):
 
     assert codes[:20] == [200] * 20
     assert codes[20] == 429
-
-def test_home_page_is_served(client):
-    response = client.get("/")
-    assert response.status_code == 200
-    assert "text/html" in response.headers["content-type"]
-    assert "GitMind" in response.text    

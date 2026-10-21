@@ -30,7 +30,9 @@ def chat(owner: str, repo: str, payload: ChatRequest, request: Request):
         )
 
     try:
-        result = answer_question(payload.question, repo_id)
+        history = [turn.model_dump() for turn in payload.history]
+        result = answer_question(payload.question, repo_id, history)
+    
     except Exception:
         logger.exception("Answering failed for %s", repo_id)
         raise HTTPException(
