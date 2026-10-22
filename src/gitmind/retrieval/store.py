@@ -20,7 +20,7 @@ from gitmind.config import settings
 from gitmind.indexing.embedder import embed_text, embed_texts
 from gitmind.models import Chunk
 
-COLLECTION = "gitmind_v2"
+COLLECTION = settings.qdrant_collection
 DENSE_SIZE = 384  # output size of all-MiniLM-L6-v2
 
 client = QdrantClient(

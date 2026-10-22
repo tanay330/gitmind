@@ -6,5 +6,35 @@ services:
     volumes:
       - qdrant_data:/qdrant/storage
 
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: gitmind
+      POSTGRES_PASSWORD: gitmind
+      POSTGRES_DB: gitmind
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gitmind -d gitmind"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file: .env
+    environment:
+      QDRANT_URL: http://qdrant:6333
+      QDRANT_API_KEY: ""
+      DATABASE_URL: postgresql+psycopg://gitmind:gitmind@postgres:5432/gitmind
+    depends_on:
+      qdrant:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+
 volumes:
   qdrant_data:
+  postgres_data:

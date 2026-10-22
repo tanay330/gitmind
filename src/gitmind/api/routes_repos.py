@@ -9,6 +9,7 @@ from gitmind.indexing.github_client import GitHubError, parse_repo_url
 from gitmind.indexing.pipeline import index_repository
 from gitmind.models import make_repo_id
 from gitmind.retrieval.store import list_repos
+from gitmind.config import settings
 
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["repos"])
@@ -32,11 +33,17 @@ def run_indexing(job_id: str, url: str) -> None:
         )
 
 
+
 @router.post("/repos", response_model=JobStatus, status_code=202)
 @limiter.limit(INDEX_LIMIT)
+
 def start_indexing(
     payload: IndexRequest, request: Request, background_tasks: BackgroundTasks
 ):
+    if not settings.allow_indexing:
+        raise HTTPException(
+        status_code=403, detail="Indexing is turned off on this deployment"
+        )
     try:
         owner, repo = parse_repo_url(payload.url)
     except ValueError as error:

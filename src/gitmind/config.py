@@ -9,5 +9,7 @@ class Settings(BaseSettings):
     database_url: str = "sqlite:///gitmind.db"
 
     model_config = SettingsConfigDict(env_file=".env")
+    qdrant_collection: str = "gitmind_v2"
+    allow_indexing: bool = True
 
 settings = Settings()

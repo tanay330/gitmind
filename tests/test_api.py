@@ -209,3 +209,8 @@ def test_chat_is_rate_limited(client, monkeypatch):
 
     assert codes[:20] == [200] * 20
     assert codes[20] == 429
+    
+def test_indexing_can_be_turned_off(client, monkeypatch):
+    monkeypatch.setattr(routes_repos.settings, "allow_indexing", False)
+    response = client.post("/repos", json={"url": "https://github.com/a/b"})
+    assert response.status_code == 403    
